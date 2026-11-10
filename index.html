@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLORAISON SS27 Show</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Jost:wght@300;400;500&family=Noto+Serif+TC:wght@400;600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* layout: fashion-house show site; black stage for imagery, white gallery for the collection, colour comes only from the looks */
+  --night:#0c0c0b;
+  --night-2:#1a1918;
+  --white:#fbfaf7;
+  --ink:#121110;
+  --mute:#8b867e;
+  --hair:#e3dfd8;
+  --display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --cjk:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --label:"Jost","Futura","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--ink);font-family:var(--label);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.lab{font-family:var(--label);font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:400}
+.cj{font-family:var(--cjk)}
+.pad{padding-left:clamp(16px,4vw,56px);padding-right:clamp(16px,4vw,56px)}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:40;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:64px;color:#fff;mix-blend-mode:difference}
+nav .links{display:flex;gap:28px}
+nav .links.r{justify-content:flex-end}
+nav .logo{font-family:var(--display);font-size:22px;letter-spacing:.18em;font-weight:500}
+nav button,nav a{text-decoration:none}
+nav button:hover,nav a:hover{opacity:.6}
+@media (max-width:760px){nav .links.l,nav .links.r .hide-s{display:none}nav .logo{font-size:17px}}
+
+/* hero */
+.hero{position:relative;height:94svh;min-height:520px;background:var(--night);color:#fff;overflow:hidden}
+.hero .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease}
+.hero .slide.on{opacity:1}
+.hero .slide img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 7s linear}
+.hero .slide.on img{transform:scale(1)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,0) 45%,rgba(0,0,0,.25));pointer-events:none}
+.hero .word{position:absolute;left:0;right:0;bottom:7%;z-index:2;text-align:center}
+.hero .word h1{font-family:var(--display);font-weight:400;font-size:clamp(54px,14vw,220px);letter-spacing:.02em;line-height:.85}
+.hero .word .sub{margin-top:22px;display:flex;justify-content:center;gap:clamp(14px,4vw,48px);flex-wrap:wrap}
+.hero .now{position:absolute;right:clamp(16px,4vw,56px);top:96px;z-index:2;text-align:right}
+.hero .now .n{font-family:var(--display);font-size:44px;line-height:1}
+.hero .now .f{font-family:var(--display);font-style:italic;font-size:20px;margin-top:6px}
+.hero .now .c{font-family:var(--cjk);letter-spacing:.4em;font-size:13px;margin-top:4px}
+.hero .ticks{position:absolute;left:clamp(16px,4vw,56px);top:100px;z-index:2;display:flex;flex-direction:column;gap:6px}
+.hero .ticks button{width:22px;height:2px;background:rgba(255,255,255,.35)}
+.hero .ticks button.on{background:#fff;width:40px}
+
+/* manifesto */
+.mani{position:relative;overflow:hidden;padding-top:clamp(90px,13vw,180px);padding-bottom:clamp(90px,13vw,180px);background:linear-gradient(180deg,#fbfaf7 0%,#f6f3ec 100%)}
+.mani canvas.petals{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.mani canvas.bloom{position:absolute;right:-6vw;top:50%;width:min(52vw,640px);aspect-ratio:1;transform:translateY(-50%);pointer-events:none;opacity:.95}
+.mani .lines{position:relative;display:grid;gap:clamp(6px,1.4vw,18px)}
+.mani .ln{font-family:var(--display);font-weight:400;font-size:clamp(46px,9vw,140px);line-height:.95;letter-spacing:-.015em}
+.mani .ln em{font-style:italic}
+.mani .ln:nth-child(2){padding-left:9vw}
+.mani .ln:nth-child(3){padding-left:18vw}
+.mani .ln .spring{font-style:italic;background:linear-gradient(90deg,#e8a0b0,#e7c64b 45%,#8fb46a 80%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.08em}
+.mani .foot{position:relative;margin-top:clamp(40px,6vw,80px);display:flex;gap:clamp(18px,4vw,56px);flex-wrap:wrap;color:var(--mute)}
+@media (max-width:760px){.mani .ln:nth-child(n){padding-left:0}.mani canvas.bloom{width:90vw;right:-35vw;opacity:.55}}
+
+/* runway */
+.runway{position:relative;background:var(--night);color:#fff}
+.runway .stick{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.runway .head{position:absolute;top:84px;left:0;right:0;display:flex;justify-content:space-between;align-items:baseline}
+.runway .head h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,4vw,56px)}
+.track{display:flex;gap:clamp(14px,2vw,28px);padding-left:clamp(16px,4vw,56px);will-change:transform}
+.track figure{flex:0 0 auto;height:min(62svh,58vw);aspect-ratio:1216/832;position:relative;cursor:pointer}
+.track figure img{width:100%;height:100%;object-fit:cover}
+.track figcaption{position:absolute;left:0;right:0;bottom:-38px;display:flex;justify-content:space-between;align-items:baseline}
+.track figcaption .f{font-family:var(--display);font-style:italic;font-size:18px}
+.runway .bar{position:absolute;bottom:40px;left:clamp(16px,4vw,56px);right:clamp(16px,4vw,56px);height:1px;background:rgba(255,255,255,.2)}
+.runway .bar i{position:absolute;left:0;top:0;bottom:0;background:#fff;width:0}
+
+/* collection */
+.sec-h{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-top:clamp(80px,10vw,140px);padding-bottom:clamp(28px,4vw,56px);flex-wrap:wrap}
+.sec-h h2{font-family:var(--display);font-weight:400;font-size:clamp(44px,8vw,120px);line-height:.9;text-wrap:balance}
+.sec-h h2 small{display:block;font-family:var(--cjk);font-size:.22em;letter-spacing:.6em;margin-top:14px;font-weight:400}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(28px,4vw,56px) clamp(14px,2vw,28px);padding-bottom:clamp(80px,10vw,140px)}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+.card{text-align:left;display:block;width:100%}
+.card .ph{position:relative;aspect-ratio:1;overflow:hidden;background:var(--hair)}
+.card .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .6s ease,transform 1.2s ease}
+.card .ph img.alt{opacity:0}
+.card:hover .ph img.alt,.card:focus-visible .ph img.alt{opacity:1}
+.card:hover .ph img{transform:scale(1.03)}
+.card .meta{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:baseline;margin-top:14px}
+.card .no{font-family:var(--display);font-size:26px;line-height:1;font-variant-numeric:tabular-nums}
+.card .fl{font-family:var(--display);font-style:italic;font-size:19px}
+.card .fl small{white-space:nowrap;font-family:var(--cjk);font-style:normal;font-size:13px;letter-spacing:.2em;margin-left:8px}
+.card .md{font-family:var(--cjk);font-size:13px;color:var(--mute)}
+.card .dots{display:flex;gap:6px;margin-top:10px}
+.card .dots i{width:10px;height:10px;border-radius:50%}
+.card .ed{color:var(--ink);border:1px solid var(--ink);padding:3px 7px;margin-left:8px;font-size:9px}
+
+/* palette */
+.palette{background:var(--night);color:#fff;padding-bottom:clamp(60px,8vw,110px)}
+.palette .sec-h{color:#fff}
+.stripes{display:flex;height:min(68svh,620px)}
+.stripes button{flex:1;position:relative;transition:flex .5s cubic-bezier(.3,.1,.2,1);overflow:hidden;min-width:0}
+.stripes button:hover,.stripes button:focus-visible{flex:5}
+.stripes .in{position:absolute;left:14px;bottom:16px;text-align:left;white-space:nowrap;opacity:0;transition:opacity .3s}
+.stripes button:hover .in,.stripes button:focus-visible .in{opacity:1}
+.stripes .in b{display:block;font-family:var(--display);font-weight:400;font-size:28px}
+.stripes .in span{display:block;font-family:var(--cjk);font-size:13px;letter-spacing:.2em;margin-top:4px}
+.stripes .nm{position:absolute;top:14px;left:50%;transform:translateX(-50%);font-family:var(--display);font-size:13px}
+@media (max-width:760px){
+  .stripes{flex-direction:column;height:auto}
+  .stripes button{height:52px;flex:none}
+  .stripes button:hover,.stripes button:focus-visible{flex:none}
+  .stripes .in{opacity:1;bottom:auto;top:50%;transform:translateY(-50%);display:flex;gap:12px;align-items:baseline}
+  .stripes .in b{font-size:20px}
+  .stripes .nm{display:none}
+}
+
+/* models */
+.models{padding-bottom:clamp(80px,10vw,140px)}
+.mlist{display:grid;grid-template-columns:1fr 1fr;column-gap:clamp(20px,4vw,64px)}
+@media (max-width:760px){.mlist{grid-template-columns:1fr}}
+.mlist button{display:grid;grid-template-columns:52px 1fr auto;align-items:baseline;gap:14px;padding:16px 10px;border-bottom:1px solid var(--hair);text-align:left;transition:background .3s,color .3s}
+.mlist .no{font-family:var(--display);font-size:16px;font-variant-numeric:tabular-nums}
+.mlist .nm{font-family:var(--cjk);font-weight:600;font-size:clamp(22px,2.6vw,34px)}
+.mlist .fl{font-family:var(--display);font-style:italic;font-size:15px;color:var(--mute)}
+.mlist button:hover .fl,.mlist button:focus-visible .fl{color:inherit}
+.credits{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:clamp(48px,6vw,90px);padding-top:28px;border-top:1px solid var(--ink)}
+@media (max-width:760px){.credits{grid-template-columns:1fr}}
+.credits .nm{font-family:var(--cjk);font-weight:600;font-size:28px;margin-top:10px}
+
+/* footer */
+footer{background:var(--night);color:#fff;padding-top:clamp(70px,9vw,120px);overflow:hidden}
+footer .cta{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+footer .cta a{display:inline-flex;align-items:center;gap:18px;border:1px solid #fff;padding:18px 28px;text-decoration:none;transition:background .3s,color .3s}
+footer .cta a:hover{background:#fff;color:var(--ink)}
+footer .cta .big{font-family:var(--display);font-style:italic;font-size:clamp(28px,4vw,52px)}
+footer .giant{font-family:var(--display);font-weight:400;font-size:16.5vw;line-height:.75;letter-spacing:-.01em;margin-top:clamp(50px,7vw,100px);white-space:nowrap;text-align:center;transform:translateY(12%)}
+footer .fine{display:flex;justify-content:space-between;padding-top:22px;padding-bottom:22px;border-top:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.6);flex-wrap:wrap;gap:10px;position:relative;z-index:2;background:var(--night)}
+
+/* look overlay */
+.ov{position:fixed;inset:0;z-index:60;background:var(--tint,#fbfaf7);display:none;overflow:auto}
+.ov.open{display:block}
+.ov .top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;height:64px;background:var(--tint,#fbfaf7)}
+.ov .top .ctl{display:flex;gap:10px}
+.ov .top button{height:40px;min-width:40px;padding:0 14px;border:1px solid var(--ink)}
+.ov .top button:hover{background:var(--ink);color:var(--white)}
+.ov .body{display:grid;grid-template-columns:1.3fr 1fr;min-height:calc(100svh - 64px)}
+@media (max-width:900px){.ov .body{grid-template-columns:1fr}}
+.ov .imgs{background:var(--ground);color:var(--on-ground);padding:clamp(20px,3vw,48px);display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,2vw,24px);position:sticky;top:64px;height:calc(100svh - 64px);align-self:start;overflow:hidden}
+.ov .imgs img{position:relative;z-index:1;box-shadow:0 30px 60px rgba(0,0,0,.28)}
+.ov .imgs .wd{width:100%;max-height:52%;object-fit:cover}
+.ov .imgs .lower{display:flex;align-items:flex-end;gap:clamp(16px,2.5vw,36px);position:relative;z-index:1}
+.ov .imgs .sq{width:46%;flex:0 0 46%;margin-top:-9%;border:clamp(6px,.8vw,12px) solid var(--tint)}
+.ov .imgs .capt{flex:1;display:flex;flex-direction:column;gap:10px;padding-bottom:6px;min-width:0}
+.ov .imgs .capt .fe{font-family:var(--display);font-style:italic;font-size:clamp(30px,3.4vw,54px);line-height:1;text-wrap:balance}
+.ov .imgs .capt .fc{font-family:var(--cjk);font-size:clamp(16px,1.5vw,22px);letter-spacing:.5em;font-weight:600}
+.ov .imgs .capt .dots{display:flex;gap:8px;margin-top:6px}
+.ov .imgs .capt .dots i{width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 1px var(--on-ground)}
+.ov .imgs .ghost{position:absolute;right:-.06em;top:-.2em;font-family:var(--display);font-size:clamp(200px,26vw,420px);line-height:1;color:transparent;-webkit-text-stroke:1px var(--on-ground);opacity:.28;z-index:0}
+.ov .imgs canvas{position:absolute;left:-14%;bottom:-22%;width:70%;aspect-ratio:1;z-index:0;opacity:.55;pointer-events:none}
+@media (max-width:900px){.ov .imgs{position:relative;top:0;height:auto}.ov .imgs .wd{max-height:none}}
+.ov .txt{position:relative;padding:clamp(28px,4vw,60px) clamp(16px,4vw,56px) 70px;display:flex;flex-direction:column;gap:30px;overflow:hidden}
+.ov .txt canvas{position:absolute;right:-18%;top:-10%;width:78%;aspect-ratio:1;pointer-events:none;z-index:0}
+.ov .txt > *:not(canvas){position:relative;z-index:1}
+.ov h3{font-family:var(--display);font-weight:500;font-size:clamp(44px,5.4vw,84px);line-height:.9;text-wrap:balance}
+.ov h3 em{display:block;font-weight:400;font-size:.36em;margin-top:.5em;color:var(--mute);letter-spacing:.02em}
+.ov .cn{font-family:var(--cjk);font-weight:600;letter-spacing:.5em;font-size:20px;margin-top:14px}
+.ov .story{display:flex;height:clamp(190px,22vw,260px);box-shadow:0 18px 40px rgba(0,0,0,.12)}
+.ov .story div{position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:12px 10px;min-width:0}
+.ov .story .v{font-family:var(--cjk);font-weight:600;font-size:15px;writing-mode:vertical-rl;letter-spacing:.3em}
+.ov .story .e{font-size:9px;letter-spacing:.16em;text-transform:uppercase;line-height:1.35}
+.ov .story .h{font-size:10px;opacity:.75;font-variant-numeric:tabular-nums;margin-top:3px}
+.ov .story div:nth-child(1){flex:2.2}.ov .story div:nth-child(2){flex:1.5}.ov .story div:nth-child(3){flex:1.2}.ov .story div:nth-child(4){flex:1}.ov .story div:nth-child(5){flex:.9}
+.ov .specs{display:grid;grid-template-columns:1fr 1fr;gap:24px 28px}
+.ov .spec{background:rgba(255,255,255,.55);backdrop-filter:blur(6px);padding:16px 18px;border-top:2px solid var(--ground)}
+.ov .spec h4{color:var(--mute);margin-bottom:10px}
+.ov .spec p{display:flex;gap:12px;align-items:baseline;font-size:14px;line-height:1.9}
+.ov .spec p b{font-family:var(--cjk);font-weight:600;min-width:4.6em}
+.ov .spec p span{font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+.ov .model{font-family:var(--cjk);font-weight:600;font-size:30px}
+.ov .edtag{align-self:flex-start;border:1px solid var(--ink);padding:6px 12px}
+@media (max-width:520px){.ov .specs{grid-template-columns:1fr}.ov .story .v{font-size:13px}.ov .story div:nth-child(n){flex:1;padding:10px 6px}.ov .story .h{font-size:8px}.ov .story .e{font-size:8px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<nav class="pad">
+  <div class="links l"><button data-to="collection" class="lab">Collection</button><button data-to="runway" class="lab">Runway</button><button data-to="palette" class="lab">Palette</button></div>
+  <div class="logo">FLORAISON</div>
+  <div class="links r"><button data-to="models" class="lab hide-s">Models</button><a class="lab" href="lookbook/">Lookbook</a></div>
+</nav>
+
+<header class="hero" id="top">
+  <div id="slides"></div>
+  <div class="ticks" id="ticks"></div>
+  <div class="now" id="now"></div>
+  <div class="word">
+    <h1>FLORAISON</h1>
+    <div class="sub lab"><span>Spring / Summer 2027</span><span>花信 · 春季</span><span>20 Looks</span></div>
+  </div>
+</header>
+
+<section class="mani pad" aria-label="Editor's note">
+  <canvas class="petals" id="petals" aria-hidden="true"></canvas>
+  <canvas class="bloom" id="bloom" aria-hidden="true"></canvas>
+  <div class="lines">
+    <div class="ln">Twenty <em>models</em></div>
+    <div class="ln">Twenty <em>flowers</em></div>
+    <div class="ln">One <span class="spring">spring</span></div>
+  </div>
+  <div class="foot lab"><span>Petal to Petal</span><span>Spring / Summer 2027</span><span>Editor's Note</span></div>
+</section>
+
+<section class="runway" id="runway">
+  <div class="stick">
+    <div class="head pad"><h2>The Runway</h2><span class="lab" id="rcount">01 / 20</span></div>
+    <div class="track" id="track"></div>
+    <div class="bar"><i id="rbar"></i></div>
+  </div>
+</section>
+
+<section id="collection" class="pad">
+  <div class="sec-h"><h2>The Collection<small>系列總覽</small></h2><span class="lab">Spring / Summer 2027 · 01–20</span></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section class="palette" id="palette">
+  <div class="sec-h pad"><h2>The Palette<small>春季色譜</small></h2><span class="lab">20 Grounds · 100 Colours</span></div>
+  <div class="stripes" id="stripes"></div>
+</section>
+
+<section class="models pad" id="models">
+  <div class="sec-h"><h2>The Models<small>模特</small></h2><span class="lab">In order of appearance</span></div>
+  <div class="mlist" id="mlist"></div>
+  <div class="credits">
+    <div><div class="lab" style="color:var(--mute)">Editor-in-Chief 總編輯</div><div class="nm">寧安</div></div>
+    <div><div class="lab" style="color:var(--mute)">Creative Director 創意總監</div><div class="nm">寧安</div></div>
+    <div><div class="lab" style="color:var(--mute)">Project 企劃</div><div class="nm" style="font-family:var(--display);font-weight:400;font-style:italic">Petal to Petal Spring</div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="cta pad">
+    <div><div class="lab" style="opacity:.6">The Lookbook 雜誌</div><div class="big">Read the issue</div></div>
+    <a href="lookbook/"><span class="lab">翻閱花信春季號</span><span aria-hidden="true">→</span></a>
+  </div>
+  <div class="giant" aria-hidden="true">FLORAISON</div>
+  <div class="fine pad lab"><span>Floraison 花信 · SS27</span><span>Issue 01 · 20 Looks</span></div>
+</footer>
+
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-label="Look 詳情">
+  <div class="top pad">
+    <span class="lab" id="ovn">Look 01 / 20</span>
+    <div class="ctl"><button id="ovp" aria-label="上一套">←</button><button id="ovx" class="lab">Close 關閉</button><button id="ovf" aria-label="下一套">→</button></div>
+  </div>
+  <div class="body pad" id="ovb"></div>
+</div>
+
+<script>
+const LOOKS=[{"n": 1, "model": "AU", "fc": "紫藤", "fe": "WISTERIA", "colors": [{"hex": "#13377C", "cn": "鈷藍夜", "en": "COBALT NIGHT"}, {"hex": "#C3A5C2", "cn": "紫藤", "en": "WISTERIA"}, {"hex": "#A9A971", "cn": "開心果", "en": "PISTACHIO"}, {"hex": "#F3DBD4", "cn": "虹粉", "en": "PRISM BLUSH"}, {"hex": "#C8AF92", "cn": "香檳", "en": "CHAMPAGNE"}], "material": [["緞面", "SATIN"], ["細褶", "PLISSÉ"], ["紫晶", "AMETHYST"], ["金釘", "GOLD STUD"]], "motif": [["稜鏡", "PRISM"], ["虹光", "SPECTRUM"], ["垂藤", "CASCADE"]], "mood": [["迷離", "DREAMY"], ["高貴", "REGAL"]]}, {"n": 2, "model": "霄璃", "fc": "毛茛", "fe": "BUTTERCUP", "colors": [{"hex": "#E26C27", "cn": "橘子汽水", "en": "TANGERINE"}, {"hex": "#2B6034", "cn": "苔綠", "en": "MOSS"}, {"hex": "#E9C717", "cn": "金盞", "en": "BUTTERCUP"}, {"hex": "#ECC8B1", "cn": "奶杏", "en": "APRICOT CREAM"}, {"hex": "#112014", "cn": "深林", "en": "DEEP FOREST"}], "material": [["麻花粗針", "CABLE KNIT"], ["蕾絲領", "LACE COLLAR"], ["琺瑯花釦", "ENAMEL BROOCH"], ["緞結", "SATIN BOW"]], "motif": [["掌心", "PALM"], ["捧花", "OFFERING"], ["日光", "SUNLIGHT"]], "mood": [["溫暖", "WARM"], ["天真", "INNOCENT"]]}, {"n": 3, "model": "殼乙", "fc": "鈴蘭", "fe": "LILY OF THE VALLEY", "colors": [{"hex": "#AAB371", "cn": "橄欖", "en": "OLIVE"}, {"hex": "#C94643", "cn": "朱絲", "en": "SILK RED"}, {"hex": "#2E3A52", "cn": "夜藍", "en": "MIDNIGHT"}, {"hex": "#F1D0CA", "cn": "珍珠粉", "en": "PEARL BLUSH"}, {"hex": "#511E1D", "cn": "牛血", "en": "OXBLOOD"}], "material": [["真絲", "SILK"], ["泡泡袖", "PUFF SLEEVE"], ["珍珠排釦", "PEARL BUTTON"], ["收腰", "CINCHED WAIST"]], "motif": [["光束", "LIGHT BEAM"], ["小鈴", "BELL"], ["長髮", "LONG HAIR"]], "mood": [["靜謐", "SERENE"], ["歸來", "RETURN"]]}, {"n": 4, "model": "桃子", "fc": "桃花", "fe": "PEACH BLOSSOM", "colors": [{"hex": "#75B1C4", "cn": "晴空", "en": "SKY"}, {"hex": "#CA1B14", "cn": "漆紅", "en": "LACQUER RED"}, {"hex": "#E69E90", "cn": "蜜桃", "en": "PEACH"}, {"hex": "#ECE9DF", "cn": "象牙", "en": "IVORY"}, {"hex": "#321310", "cn": "黑緞", "en": "BLACK SATIN"}], "material": [["漆皮", "PATENT"], ["圓領", "PETER PAN"], ["黑緞結", "BLACK BOW"], ["髮箍", "HEADBAND"]], "motif": [["蜜桃", "PEACH"], ["落瓣", "PETAL FALL"], ["枝椏", "BRANCH"]], "mood": [["甜美", "SWEET"], ["傾心", "ENCHANTED"]]}, {"n": 5, "model": "冰川", "fc": "金合歡", "fe": "MIMOSA", "colors": [{"hex": "#855488", "cn": "薰衣紫", "en": "LAVENDER"}, {"hex": "#5A926F", "cn": "翡翠", "en": "JADE"}, {"hex": "#E4C73C", "cn": "含羞黃", "en": "MIMOSA"}, {"hex": "#66331E", "cn": "馬鞍棕", "en": "SADDLE"}, {"hex": "#221611", "cn": "烏木", "en": "EBONY"}], "material": [["編織", "WOVEN"], ["掛脖", "HALTER"], ["皮革", "LEATHER"], ["金手環", "GOLD CUFF"]], "motif": [["碎光", "DAPPLED LIGHT"], ["銀葉", "SILVER LEAF"], ["短捲", "SHORT CURL"]], "mood": [["灑脫", "FREE"], ["暗戀", "SECRET"]]}, {"n": 6, "model": "Yui", "fc": "櫻桃", "fe": "CHERRY", "colors": [{"hex": "#265F5C", "cn": "孔雀綠", "en": "PEACOCK TEAL"}, {"hex": "#DB121A", "cn": "櫻桃紅", "en": "CHERRY"}, {"hex": "#F5E0D3", "cn": "瓷白", "en": "PORCELAIN"}, {"hex": "#541A1B", "cn": "酒漬", "en": "WINE"}, {"hex": "#879430", "cn": "嫩枝", "en": "TWIG"}], "material": [["荷葉邊", "RUFFLE"], ["水晶", "CRYSTAL"], ["黑絲帶", "BLACK RIBBON"], ["蕾絲紋面", "LACE MARK"]], "motif": [["果實", "FRUIT"], ["花冠", "CROWN"], ["銀髮", "PLATINUM"]], "mood": [["清冷", "COOL"], ["誘惑", "TEMPT"]]}, {"n": 7, "model": "秋秋", "fc": "鳶尾", "fe": "IRIS", "colors": [{"hex": "#DCB33A", "cn": "芥末", "en": "MUSTARD"}, {"hex": "#DE1818", "cn": "鸚鵡紅", "en": "MACAW RED"}, {"hex": "#1544B6", "cn": "鈷藍", "en": "COBALT"}, {"hex": "#2299B8", "cn": "土耳其藍", "en": "TURQUOISE"}, {"hex": "#7169C2", "cn": "鳶尾紫", "en": "IRIS"}], "material": [["羽飾", "PLUMAGE"], ["荷葉領", "RUFFLE COLLAR"], ["羅紋", "RIB KNIT"], ["金墜", "GOLD DROP"]], "motif": [["金剛鸚鵡", "MACAW"], ["原色", "PRIMARY"], ["熱帶", "TROPIC"]], "mood": [["明豔", "VIVID"], ["自由", "FREEDOM"]]}, {"n": 8, "model": "草莓", "fc": "虞美人", "fe": "POPPY", "colors": [{"hex": "#42AAAE", "cn": "湖水綠", "en": "LAGOON"}, {"hex": "#DE1612", "cn": "罌粟紅", "en": "POPPY RED"}, {"hex": "#D84E31", "cn": "燈籠橘", "en": "LANTERN"}, {"hex": "#181817", "cn": "墨黑", "en": "INK"}, {"hex": "#EAE0DC", "cn": "骨瓷", "en": "BONE"}], "material": [["皮革", "LEATHER"], ["寬肩", "POWER SHOULDER"], ["手套", "GLOVE"], ["紅唇", "RED LIP"]], "motif": [["燈籠果", "LANTERN FRUIT"], ["紅髮", "CRIMSON"], ["長夜", "NOCTURNE"]], "mood": [["冷豔", "COLD"], ["危險", "DANGER"]]}, {"n": 9, "model": "蘇晚棠", "fc": "迎春", "fe": "WINTER JASMINE", "colors": [{"hex": "#AF1512", "cn": "朱砂", "en": "CINNABAR"}, {"hex": "#E2A50C", "cn": "迎春黃", "en": "JASMINE"}, {"hex": "#DCC9BD", "cn": "霧白", "en": "MIST"}, {"hex": "#BFB3AA", "cn": "銀灰", "en": "SILVER"}, {"hex": "#0F1010", "cn": "松煙墨", "en": "PINE INK"}], "material": [["薄紗", "ORGANZA"], ["水墨", "INK WASH"], ["腰封", "OBI SASH"], ["黑絲帶", "BLACK RIBBON"]], "motif": [["枝", "BRANCH"], ["墨", "INK"], ["銀髮", "SILVER HAIR"]], "mood": [["疏離", "DISTANT"], ["東方", "ORIENT"]]}, {"n": 10, "model": "霄璃（男）", "fc": "香豌豆", "fe": "SWEET PEA", "colors": [{"hex": "#385D3F", "cn": "森綠", "en": "FOREST"}, {"hex": "#E69D42", "cn": "芥黃", "en": "OCHRE"}, {"hex": "#8A4681", "cn": "蘭紫", "en": "ORCHID"}, {"hex": "#602C5A", "cn": "茄紫", "en": "AUBERGINE"}, {"hex": "#E9DCD0", "cn": "珍珠", "en": "PEARL"}], "material": [["錦緞", "BROCADE"], ["刺繡", "EMBROIDERY"], ["珍珠鍊", "PEARL STRAND"], ["緞結", "SATIN BOW"]], "motif": [["紳士", "DANDY"], ["耳語", "WHISPER"], ["白髮", "WHITE HAIR"]], "mood": [["優雅", "ELEGANT"], ["溫柔", "TENDER"]]}, {"n": 11, "model": "MIN", "fc": "三色堇", "fe": "PANSY", "colors": [{"hex": "#ADBC1A", "cn": "萊姆", "en": "CHARTREUSE"}, {"hex": "#723F97", "cn": "堇紫", "en": "PANSY VIOLET"}, {"hex": "#D7CC3B", "cn": "堇黃", "en": "PANSY GOLD"}, {"hex": "#ECE8DA", "cn": "奶油", "en": "CREAM"}, {"hex": "#151C1F", "cn": "漆黑", "en": "JET"}], "material": [["緞面", "SATIN"], ["立體花飾", "APPLIQUÉ"], ["腰結", "BOW BELT"], ["蕾絲傘", "LACE PARASOL"]], "motif": [["陽傘", "PARASOL"], ["齊瀏海", "BLUNT FRINGE"], ["午後", "AFTERNOON"]], "mood": [["端莊", "PRIM"], ["思念", "LONGING"]]}, {"n": 12, "model": "TY", "fc": "銀蓮花", "fe": "ANEMONE", "colors": [{"hex": "#A7DDC6", "cn": "薄荷", "en": "MINT"}, {"hex": "#CF1A25", "cn": "銀蓮紅", "en": "ANEMONE RED"}, {"hex": "#E7E3DB", "cn": "雪白", "en": "SNOW"}, {"hex": "#120E0D", "cn": "漆黑", "en": "JET"}, {"hex": "#7C1C1C", "cn": "酒紅", "en": "BORDEAUX"}], "material": [["格紋", "TARTAN"], ["別針", "SAFETY PIN"], ["荷葉領", "JABOT"], ["粗針織", "CHUNKY KNIT"]], "motif": [["雙人", "DUET"], ["耳洞", "PIERCING"], ["紅與白", "RED & WHITE"]], "mood": [["叛逆", "REBEL"], ["相依", "TOGETHER"]]}, {"n": 13, "model": "Jiayi", "fc": "牡丹", "fe": "PEONY", "colors": [{"hex": "#264C74", "cn": "黛藍", "en": "INDIGO"}, {"hex": "#C73731", "cn": "牡丹紅", "en": "PEONY RED"}, {"hex": "#E9D2BC", "cn": "米白", "en": "ECRU"}, {"hex": "#E5826A", "cn": "珊瑚", "en": "CORAL"}, {"hex": "#3E7A5C", "cn": "玉綠", "en": "JADE"}], "material": [["旗袍", "QIPAO"], ["盤扣", "FROG CLOSURE"], ["刺繡", "EMBROIDERY"], ["珊瑚墜", "CORAL DROP"]], "motif": [["髮簪", "HAIRPIN"], ["富貴", "OPULENCE"], ["長髮", "LONG HAIR"]], "mood": [["明媚", "RADIANT"], ["大方", "GRACEFUL"]]}, {"n": 14, "model": "QOO（女）", "fc": "風信子", "fe": "HYACINTH", "colors": [{"hex": "#BE863C", "cn": "焦糖", "en": "CARAMEL"}, {"hex": "#1F2C50", "cn": "風信子藍", "en": "HYACINTH"}, {"hex": "#255EBA", "cn": "寶藍", "en": "SAPPHIRE"}, {"hex": "#49803A", "cn": "祖母綠", "en": "EMERALD"}, {"hex": "#0D1114", "cn": "夜黑", "en": "NIGHT"}], "material": [["串珠", "BEADWORK"], ["一字肩", "OFF-SHOULDER"], ["耳骨夾", "EAR CUFF"], ["寶石墜", "GEM DROP"]], "motif": [["異色瞳", "HETEROCHROMIA"], ["藍挑染", "BLUE STREAK"], ["齊瀏海", "BLUNT FRINGE"]], "mood": [["神秘", "MYSTIC"], ["冷靜", "COOL"]]}, {"n": 15, "model": "QOO（男）", "fc": "油菜花", "fe": "RAPESEED", "colors": [{"hex": "#B64520", "cn": "赤陶", "en": "TERRACOTTA"}, {"hex": "#374B6D", "cn": "丹寧", "en": "DENIM"}, {"hex": "#DCD60C", "cn": "菜花黃", "en": "CANOLA"}, {"hex": "#DAD1C8", "cn": "素白", "en": "PLAIN WHITE"}, {"hex": "#40271E", "cn": "皮革棕", "en": "LEATHER"}], "material": [["丹寧", "DENIM"], ["羅紋背心", "RIB TANK"], ["皮手套", "WORK GLOVE"], ["銀鍊", "SILVER CHAIN"]], "motif": [["燈泡", "BULB"], ["田野", "FIELD"], ["刺青", "TATTOO"]], "mood": [["野性", "WILD"], ["陽光", "SUNNY"]]}, {"n": 16, "model": "寧安", "fc": "勿忘我", "fe": "FORGET-ME-NOT", "colors": [{"hex": "#23528C", "cn": "皇家藍", "en": "ROYAL BLUE"}, {"hex": "#51ACD7", "cn": "勿忘我", "en": "FORGET-ME-NOT"}, {"hex": "#C1C5D3", "cn": "銀霧", "en": "SILVER MIST"}, {"hex": "#E2DADB", "cn": "珍珠白", "en": "PEARL"}, {"hex": "#D9D053", "cn": "花心黃", "en": "STAMEN"}], "material": [["百褶", "PLISSÉ"], ["高領", "HIGH NECK"], ["水晶", "CRYSTAL"], ["刺繡小花", "FLORET"]], "motif": [["捲髮", "CURL"], ["銀白", "SILVER"], ["凝視", "GAZE"]], "mood": [["記得", "REMEMBER"], ["清透", "CLEAR"]]}, {"n": 17, "model": "陌杳", "fc": "櫻花", "fe": "SAKURA", "colors": [{"hex": "#809634", "cn": "草綠", "en": "MEADOW"}, {"hex": "#114CAD", "cn": "鈷藍", "en": "COBALT"}, {"hex": "#C31413", "cn": "緞帶紅", "en": "RIBBON RED"}, {"hex": "#DEB8B4", "cn": "櫻粉", "en": "SAKURA"}, {"hex": "#5C4234", "cn": "栗棕", "en": "CHESTNUT"}], "material": [["印花", "PRINT"], ["荷葉領", "RUFFLE"], ["緞帶", "RIBBON"], ["櫻桃耳墜", "CHERRY DROP"]], "motif": [["落櫻", "PETAL FALL"], ["捲髮", "CURL"], ["掌心", "PALM"]], "mood": [["明朗", "BRIGHT"], ["浪漫", "ROMANCE"]]}, {"n": 18, "model": "ぬ", "fc": "葡萄風信子", "fe": "MUSCARI", "colors": [{"hex": "#DECF5B", "cn": "檸檬", "en": "LEMON"}, {"hex": "#E7C2C4", "cn": "草莓牛奶", "en": "STRAWBERRY MILK"}, {"hex": "#33468C", "cn": "葡萄藍", "en": "MUSCARI"}, {"hex": "#EBDCDD", "cn": "牛奶", "en": "MILK"}, {"hex": "#1A243C", "cn": "深海", "en": "DEEP NAVY"}], "material": [["毛海", "MOHAIR"], ["圓領", "PETER PAN"], ["緞帶", "RIBBON"], ["珍珠耳釘", "PEARL STUD"]], "motif": [["泡泡", "BUBBLE"], ["粉髮", "PINK HAIR"], ["晴天", "SUNNY DAY"]], "mood": [["童話", "FAIRYTALE"], ["輕盈", "AIRY"]]}, {"n": 19, "model": "陸蘋瑤", "fc": "晚香玉", "fe": "TUBEROSE", "colors": [{"hex": "#9A661E", "cn": "赭金", "en": "OCHRE"}, {"hex": "#368172", "cn": "翠青", "en": "JADE TEAL"}, {"hex": "#EEE2C4", "cn": "晚香白", "en": "TUBEROSE"}, {"hex": "#A95034", "cn": "丹蔻", "en": "LACQUER"}, {"hex": "#2E241A", "cn": "烏髮", "en": "RAVEN"}], "material": [["旗袍", "QIPAO"], ["珍珠盤扣", "PEARL FROG"], ["立體花飾", "APPLIQUÉ"], ["玉鐲", "JADE BANGLE"]], "motif": [["花穗", "SPIKE"], ["夜香", "NIGHT SCENT"], ["長髮", "LONG HAIR"]], "mood": [["溫婉", "GENTLE"], ["幽香", "FRAGRANT"]]}, {"n": 20, "model": "木木", "fc": "番紅花", "fe": "CROCUS", "colors": [{"hex": "#9DC40B", "cn": "青檸", "en": "LIME"}, {"hex": "#592F7D", "cn": "番紅紫", "en": "CROCUS"}, {"hex": "#D14B11", "cn": "花蕊橘", "en": "SAFFRON"}, {"hex": "#F2F1EA", "cn": "髮帶白", "en": "ALABASTER"}, {"hex": "#1B1B17", "cn": "墨黑", "en": "JET"}], "material": [["羅紋針織", "RIB KNIT"], ["無袖", "SLEEVELESS"], ["刺繡", "EMBROIDERY"], ["紫晶墜", "AMETHYST DROP"]], "motif": [["髮帶", "HEADBAND"], ["花蕊", "STAMEN"], ["波浪長髮", "WAVES"]], "mood": [["銳利", "SHARP"], ["濃烈", "INTENSE"]]}];
+const N=LOOKS.length;
+const pad=n=>String(n).padStart(2,'0');
+const img=(k,kind)=>`img/look${pad(k)}_${kind}.jpg`;
+const cap=s=>s.charAt(0)+s.slice(1).toLowerCase();
+const $=id=>document.getElementById(id);
+
+function hex2rgb(h){return [1,3,5].map(i=>parseInt(h.substr(i,2),16))}
+function mix(a,b,t){const x=hex2rgb(a),y=hex2rgb(b);return 'rgb('+x.map((v,i)=>Math.round(v*t+y[i]*(1-t))).join(',')+')'}
+function rnd(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+/* procedural stamen: filaments radiating from a pistil, each tipped with an anther, pollen scattered */
+function bloom(cv,cols,seed,cx=.5){
+  if(!cv)return;const dpr=Math.min(2,devicePixelRatio||1),W=cv.clientWidth,H=cv.clientHeight;if(!W)return;
+  cv.width=W*dpr;cv.height=H*dpr;const c=cv.getContext('2d');c.scale(dpr,dpr);c.clearRect(0,0,W,H);
+  const r=rnd(seed),X=W*cx,Y=H*.5,R=Math.min(W,H)*.46;
+  const lightCols=cols.filter(h=>lum(h)>.18),darkCols=cols.filter(h=>lum(h)<=.5);
+  const anth=cols.slice(1).concat(cols.slice(1));
+  // soft petals behind
+  for(let i=0;i<7;i++){const a=i/7*Math.PI*2+r()*.3;c.save();c.translate(X,Y);c.rotate(a);c.globalAlpha=.10;c.fillStyle=cols[i%cols.length];
+    c.beginPath();c.moveTo(0,0);c.bezierCurveTo(R*.35,-R*.32,R*.95,-R*.22,R*1.02,0);c.bezierCurveTo(R*.95,R*.22,R*.35,R*.32,0,0);c.fill();c.restore();}
+  const n=56;
+  for(let i=0;i<n;i++){
+    const a=r()*Math.PI*2,L=R*(.45+r()*.55),bend=(r()-.5)*.9;
+    const ex=X+Math.cos(a)*L,ey=Y+Math.sin(a)*L;
+    const mx=X+Math.cos(a+bend)*L*.55,my=Y+Math.sin(a+bend)*L*.55;
+    c.strokeStyle=mix(cols[(i%2)+1]||cols[1],'#ffffff',.55);c.globalAlpha=.75;c.lineWidth=.8+r()*.9;
+    c.beginPath();c.moveTo(X,Y);c.quadraticCurveTo(mx,my,ex,ey);c.stroke();
+    const ang=Math.atan2(ey-my,ex-mx);c.save();c.translate(ex,ey);c.rotate(ang);c.globalAlpha=.95;
+    c.fillStyle=anth[i%anth.length];c.beginPath();c.ellipse(0,0,4+r()*5,1.8+r()*1.6,0,0,Math.PI*2);c.fill();c.restore();
+    if(r()<.55){for(let k=0;k<3;k++){c.globalAlpha=.6;c.fillStyle=anth[(i+k)%anth.length];c.beginPath();c.arc(ex+(r()-.5)*22,ey+(r()-.5)*22,.8+r()*1.6,0,Math.PI*2);c.fill();}}
+  }
+  // pistil
+  c.globalAlpha=1;const g=c.createRadialGradient(X,Y,0,X,Y,R*.12);g.addColorStop(0,mix(cols[2]||cols[1],'#ffffff',.6));g.addColorStop(1,cols[1]);
+  c.fillStyle=g;c.beginPath();c.arc(X,Y,R*.07,0,Math.PI*2);c.fill();
+  for(let k=0;k<26;k++){const a=r()*Math.PI*2,d=R*.07+r()*R*.06;c.fillStyle=cols[k%cols.length];c.beginPath();c.arc(X+Math.cos(a)*d,Y+Math.sin(a)*d,1+r()*1.5,0,Math.PI*2);c.fill();}
+}
+/* drifting petals for the editor's note */
+function petals(){
+  const cv=$('petals'),sec=cv.parentElement,ctx=cv.getContext('2d'),dpr=Math.min(2,devicePixelRatio||1);
+  const cols=LOOKS.map(l=>l.colors[1].hex);const r=rnd(20270);let W,H,P=[];
+  function size(){W=sec.clientWidth;H=sec.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    P=Array.from({length:Math.round(W/38)},(_,i)=>({x:r()*W,y:r()*H,s:5+r()*9,a:r()*6.28,v:.15+r()*.35,w:.004+r()*.01,c:cols[i%cols.length],o:.25+r()*.4}));draw()}
+  function petal(p){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.globalAlpha=p.o;ctx.fillStyle=p.c;ctx.beginPath();
+    ctx.moveTo(0,-p.s);ctx.bezierCurveTo(p.s*.8,-p.s*.6,p.s*.6,p.s*.7,0,p.s);ctx.bezierCurveTo(-p.s*.6,p.s*.7,-p.s*.8,-p.s*.6,0,-p.s);ctx.fill();ctx.restore()}
+  function draw(){ctx.clearRect(0,0,W,H);P.forEach(petal)}
+  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function tick(t){P.forEach(p=>{p.y+=p.v;p.x+=Math.sin(t*.0006+p.a)*.3;p.a+=p.w;if(p.y>H+20){p.y=-20;p.x=r()*W}});draw();requestAnimationFrame(tick)}
+  size();addEventListener('resize',size);if(!still)requestAnimationFrame(tick);
+}
+
+
+/* hero */
+const order=[1,7,13,16,20,4,19,9,18,12,3,15,6,10,2,14,8,11,5,17];
+$('slides').innerHTML=order.map((k,i)=>`<div class="slide${i?'':' on'}"><img ${i<2?'src':'data-src'}="${img(k,'wide')}" alt="Look ${pad(k)}"></div>`).join('');
+$('ticks').innerHTML=order.map((k,i)=>`<button aria-label="Look ${pad(k)}" class="${i?'':'on'}"></button>`).join('');
+let hi=0,htimer;
+function hero(i){
+  const s=$('slides').children,t=$('ticks').children;
+  s[hi].classList.remove('on');t[hi].classList.remove('on');hi=(i+order.length)%order.length;
+  const im=s[hi].querySelector('img');if(im.dataset.src){im.src=im.dataset.src;im.removeAttribute('data-src')}
+  const nx=s[(hi+1)%order.length].querySelector('img');if(nx.dataset.src){nx.src=nx.dataset.src;nx.removeAttribute('data-src')}
+  s[hi].classList.add('on');t[hi].classList.add('on');
+  const l=LOOKS[order[hi]-1];
+  $('now').innerHTML=`<div class="lab">Look</div><div class="n">${pad(l.n)}</div><div class="f">${cap(l.fe)}</div><div class="c">${l.fc}</div>`;
+  clearTimeout(htimer);htimer=setTimeout(()=>hero(hi+1),5200);
+}
+[...$('ticks').children].forEach((b,i)=>b.onclick=()=>hero(i));
+hero(0);
+
+/* runway */
+$('track').innerHTML=LOOKS.map(l=>`<figure data-look="${l.n}"><img loading="lazy" src="${img(l.n,'wide')}" alt="Look ${pad(l.n)} ${l.fe}"><figcaption><span class="lab">Look ${pad(l.n)} · ${l.model}</span><span class="f">${cap(l.fe)} <span class="cj" style="font-style:normal;font-size:13px;letter-spacing:.2em">${l.fc}</span></span></figcaption></figure>`).join('');
+const rw=$('runway'),tr=$('track');
+function sizeRunway(){const extra=tr.scrollWidth-innerWidth+innerWidth*0.08;rw.style.height=(innerHeight+Math.max(0,extra))+'px';onScroll()}
+function onScroll(){
+  const r=rw.getBoundingClientRect(),total=rw.offsetHeight-innerHeight;
+  const p=Math.min(1,Math.max(0,-r.top/total||0));
+  const extra=tr.scrollWidth-innerWidth+innerWidth*0.08;
+  tr.style.transform=`translateX(${-p*Math.max(0,extra)}px)`;
+  $('rbar').style.width=(p*100)+'%';
+  $('rcount').textContent=`${pad(Math.min(N,1+Math.floor(p*N)))} / ${N}`;
+}
+addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',sizeRunway);
+tr.querySelectorAll('img').forEach(i=>i.addEventListener('load',sizeRunway,{once:true}));
+
+/* collection */
+$('grid').innerHTML=LOOKS.map(l=>`<button class="card" data-look="${l.n}" aria-label="Look ${pad(l.n)} ${l.fe} ${l.model}">
+  <div class="ph"><img loading="lazy" src="${img(l.n,'sq')}" alt=""><img class="alt" loading="lazy" src="${img(l.n,'wide')}" alt=""></div>
+  <div class="meta"><span class="no">${pad(l.n)}</span><span class="fl">${cap(l.fe)}<small>${l.fc}</small></span><span class="md">${l.model}${l.n===16?'<span class="lab ed">Editor</span>':''}</span></div>
+  <div class="dots">${l.colors.map(c=>`<i style="background:${c.hex}"></i>`).join('')}</div></button>`).join('');
+
+/* palette */
+const lum=h=>{const v=[1,3,5].map(i=>parseInt(h.substr(i,2),16)/255).map(c=>c<=.03928?c/12.92:Math.pow((c+.055)/1.055,2.4));return .2126*v[0]+.7152*v[1]+.0722*v[2]};
+$('stripes').innerHTML=LOOKS.map(l=>{const c=l.colors[0],fg=lum(c.hex)>.32?'#121110':'#fbfaf7';return `<button data-look="${l.n}" style="background:${c.hex};color:${fg}" aria-label="Look ${pad(l.n)} ${c.cn} ${c.en}"><span class="nm">${pad(l.n)}</span><span class="in"><b>${c.en.charAt(0)+c.en.slice(1).toLowerCase()}</b><span>${c.cn} · ${c.hex}</span></span></button>`}).join('');
+
+/* models */
+$('mlist').innerHTML=LOOKS.map(l=>`<button data-look="${l.n}" data-c="${l.colors[0].hex}"><span class="no">${pad(l.n)}</span><span class="nm">${l.model}</span><span class="fl">${cap(l.fe)}</span></button>`).join('');
+$('mlist').querySelectorAll('button').forEach(b=>{const c=b.dataset.c,fg=lum(c)>.32?'#121110':'#fbfaf7';
+  b.addEventListener('mouseenter',()=>{b.style.background=c;b.style.color=fg});b.addEventListener('mouseleave',()=>{b.style.background='';b.style.color=''})});
+
+/* overlay */
+let cur=1,lastFocus=null;
+function show(n){
+  cur=((n-1+N)%N)+1;const l=LOOKS[cur-1];
+  $('ovn').textContent=`Look ${pad(l.n)} / ${N}`;
+  const sp=(t,a)=>`<div class="spec"><h4 class="lab">${t}</h4>${a.map(([c,e])=>`<p><b>${c}</b><span>${e}</span></p>`).join('')}</div>`;
+  const g=l.colors[0].hex,ong=lum(g)>.32?'#121110':'#fbfaf7';
+  $('ov').style.setProperty('--ground',g);$('ov').style.setProperty('--on-ground',ong);
+  $('ov').style.setProperty('--tint',mix(g,'#fbfaf7',.09));
+  $('ovb').innerHTML=`<div class="imgs"><canvas id="ovbloom2" aria-hidden="true"></canvas><span class="ghost" aria-hidden="true">${pad(l.n)}</span><img class="wd" src="${img(l.n,'wide')}" alt="Look ${pad(l.n)}">
+  <div class="lower"><div class="capt"><span class="lab">Look ${pad(l.n)} · ${l.model}</span><span class="fe">${cap(l.fe)}</span><span class="fc">${l.fc}</span><span class="dots">${l.colors.map(c=>`<i style="background:${c.hex}"></i>`).join('')}</span></div><img class="sq" src="${img(l.n,'sq')}" alt=""></div></div>
+  <div class="txt"><canvas id="ovbloom" aria-hidden="true"></canvas>
+    <div><div class="lab" style="color:var(--mute)">Look ${pad(l.n)} · Spring / Summer 2027</div><h3 style="margin-top:14px">${l.fe}<em>Petal to Petal Spring</em></h3><div class="cn">${l.fc}</div></div>
+    ${l.n===16?`<span class="edtag lab">Editor's Look 主編造型</span>`:''}
+    <div><div class="lab" style="color:var(--mute);margin-bottom:12px">Colour Story 色彩</div>
+    <div class="story">${l.colors.map(c=>{const f=lum(c.hex)>.32?'#121110':'#fbfaf7';return `<div style="background:${c.hex};color:${f}"><span class="v">${c.cn}</span><span><span class="e">${c.en}</span><span class="h" style="display:block">${c.hex}</span></span></div>`}).join('')}</div></div>
+    <div class="specs">${sp('Material 材質',l.material)}${sp('Motif 意象',l.motif)}${sp('Mood 情緒',l.mood)}<div class="spec"><h4 class="lab">Model 模特</h4><div class="model">${l.model}</div></div></div>
+  </div>`;
+  requestAnimationFrame(()=>{bloom($('ovbloom'),l.colors.map(c=>c.hex),l.n*97+3,.62);bloom($('ovbloom2'),[g,'#ffffff'].concat(l.colors.slice(1).map(c=>c.hex)),l.n*31+7,.5)});
+  $('ov').scrollTop=0;
+}
+function open(n){lastFocus=document.activeElement;show(n);$('ov').classList.add('open');document.body.style.overflow='hidden';$('ovx').focus()}
+function close(){$('ov').classList.remove('open');document.body.style.overflow='';lastFocus&&lastFocus.focus()}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-look]');if(t&&!$('ov').contains(t))open(+t.dataset.look)});
+$('ovx').onclick=close;$('ovp').onclick=()=>show(cur-1);$('ovf').onclick=()=>show(cur+1);
+addEventListener('keydown',e=>{if(!$('ov').classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(cur-1);if(e.key==='ArrowRight')show(cur+1)});
+document.querySelectorAll('[data-to]').forEach(b=>b.onclick=()=>$(b.dataset.to).scrollIntoView({behavior:'smooth'}));
+sizeRunway();
+petals();
+const b16=LOOKS[15].colors.map(c=>c.hex);
+function drawManiBloom(){bloom($('bloom'),[LOOKS[3].colors[0].hex,'#e8a0b0','#e7c64b','#8fb46a','#f3d6dc'],2027,.5)}
+drawManiBloom();addEventListener('resize',drawManiBloom);
+</script>
+<script src="music.js"></script>
+</body>
+</html>

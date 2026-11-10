@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLORAISON 花信 春季號</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Jost:wght@300;400;500&family=Noto+Serif+TC:wght@400;600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* layout: a physical two-page magazine on a dark table; each look = full-bleed spread + square/colour-card spread */
+  --stage:#191817;
+  --stage-2:#2a2826;
+  --paper:#F6F4EF;
+  --ink:#151413;
+  --mute:#8a857d;
+  --hair:#d9d4cb;
+  --display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --cjk:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --label:"Jost","Futura","Helvetica Neue",Arial,sans-serif;
+  --pw:480px; --ph:640px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--stage);color:#eee;overflow:hidden}
+body{font-family:var(--label);background:radial-gradient(ellipse at 50% 40%,var(--stage-2),var(--stage) 70%)}
+#stage{position:absolute;inset:0 0 56px 0;display:flex;align-items:center;justify-content:center;perspective:2600px}
+#book{position:relative;cursor:pointer;width:calc(var(--pw)*2);height:var(--ph);transition:transform .9s cubic-bezier(.45,.05,.2,1);perspective:2600px}
+.leaf{position:absolute;top:0;left:var(--pw);width:var(--pw);height:var(--ph);transform-origin:left center;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.45,.05,.2,1)}
+.leaf.turned{transform:rotateY(-180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.face.back{transform:rotateY(180deg)}
+#book.single{width:var(--pw)}
+.spage{position:absolute;inset:0;transform-origin:left center;transition:transform .7s cubic-bezier(.45,.05,.2,1),opacity .7s ease;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.spage.gone{transform:rotateY(-105deg);opacity:0}
+.spage.far{visibility:hidden}
+#book:not(.single){filter:drop-shadow(0 26px 40px rgba(0,0,0,.5))}
+
+/* ---------- page base ---------- */
+.page{position:absolute;inset:0;background:var(--paper);color:var(--ink);font-size:calc(var(--pw)/40);overflow:hidden}
+.single .page{font-size:calc(var(--pw)/34)}
+.page.L::after,.page.R::after{content:"";position:absolute;top:0;bottom:0;width:9%;pointer-events:none;z-index:5}
+.page.L::after{right:0;background:linear-gradient(to left,rgba(0,0,0,.22),rgba(0,0,0,0))}
+.page.R::after{left:0;background:linear-gradient(to right,rgba(0,0,0,.18),rgba(255,255,255,0) 60%)}
+.single .page::after{display:none}
+.lab{font-family:var(--label);font-weight:400;font-size:.62em;letter-spacing:.22em;text-transform:uppercase}
+.cj{font-family:var(--cjk)}
+.folio{position:absolute;bottom:2.4em;font-family:var(--label);font-size:.6em;letter-spacing:.2em;color:var(--mute)}
+.L .folio{left:3.2em}.R .folio,.single .folio{right:3.2em}
+img{display:block}
+
+/* wide spread */
+.wide{background:#000}
+.wide .half{position:absolute;inset:0;overflow:hidden}
+.wide .half img{position:absolute;top:0;height:100%;width:200%;object-fit:cover}
+.wide.L .half img{left:0}
+.wide.R .half img{left:-100%}
+.wide.full .half img{width:100%;left:0;object-position:50% 50%}
+.ov{position:absolute;z-index:6;color:#fff;text-shadow:0 0 1.2em rgba(0,0,0,.35)}
+.bignum{left:6%;bottom:4%;font-family:var(--display);font-weight:400;font-size:9em;line-height:.8;letter-spacing:-.02em}
+.wide.full .bignum{font-size:7em}
+.wcap{right:7%;bottom:6%;text-align:right}
+.wcap .fe{font-family:var(--display);font-style:italic;font-size:1.6em;display:block}
+.wcap .fc{font-family:var(--cjk);font-size:1em;letter-spacing:.4em;display:block;margin-top:.3em}
+.wtag{left:6%;top:5%}
+.wide.R .wtag{left:auto;right:7%;top:5%}
+
+/* square page */
+.sq{display:flex;flex-direction:column;align-items:center}
+.sq .frame{margin-top:11%;width:78%;aspect-ratio:1;overflow:hidden;box-shadow:0 1.2em 2.6em rgba(0,0,0,.25)}
+.sq .frame img{width:100%;height:100%;object-fit:cover}
+.sq .row{width:78%;display:flex;justify-content:space-between;align-items:baseline;margin-top:1.6em}
+.sq .sqname{width:78%;margin-top:1.2em;display:flex;align-items:baseline;gap:.8em}
+.sq .sqname .fe{font-family:var(--display);font-style:italic;font-size:2.6em;line-height:1}
+.sq .sqname .fc{font-family:var(--cjk);font-size:1.1em;letter-spacing:.3em}
+.sq .dots{width:78%;display:flex;gap:.5em;margin-top:auto;margin-bottom:5.2em}
+.sq .dots i{width:1.1em;height:1.1em;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.35)}
+
+/* info page */
+.info{padding:3.4em 3.4em 4.4em 4em;display:flex;flex-direction:column}
+.info .top{display:flex;justify-content:space-between;color:var(--mute)}
+.info h2{font-family:var(--display);font-weight:500;line-height:.92;margin-top:.55em;letter-spacing:-.01em;text-wrap:balance}
+.info .cn{font-family:var(--cjk);font-weight:600;font-size:1.5em;letter-spacing:.5em;margin-top:.5em}
+.info .ed{display:inline-block;margin-top:1em;padding:.45em .9em;border:1px solid var(--ink);align-self:flex-start}
+.chips{display:grid;grid-template-columns:repeat(5,1fr);gap:.7em;margin-top:2em}
+.chip .sw{aspect-ratio:3/4;width:100%}
+.chip .c1{font-family:var(--cjk);font-size:.86em;margin-top:.6em;font-weight:600}
+.chip .c2{font-size:.5em;letter-spacing:.14em;text-transform:uppercase;margin-top:.35em;line-height:1.35}
+.chip .c3{font-size:.52em;letter-spacing:.08em;color:var(--mute);margin-top:.3em;font-variant-numeric:tabular-nums}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:1.5em 2em;margin-top:auto;border-top:1px solid var(--hair);padding-top:1.4em}
+.spec h4{font-weight:400;color:var(--mute);margin-bottom:.7em}
+.spec p{font-size:.84em;line-height:1.75;display:flex;gap:.7em;align-items:baseline}
+.spec p b{font-family:var(--cjk);font-weight:600;min-width:4.6em}
+.spec p span{font-size:.72em;letter-spacing:.16em;text-transform:uppercase}
+.spec .model{font-family:var(--cjk);font-size:1.7em;font-weight:600;line-height:1.2}
+
+/* cover */
+.cover{background:#111;color:#fff}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.cover::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0) 42%),linear-gradient(to bottom,rgba(0,0,0,.28),rgba(0,0,0,0) 22%)}
+.cover .mast{position:absolute;top:4.5%;left:0;right:0;text-align:center;z-index:2}
+.cover .mast b{display:block;font-family:var(--display);font-weight:500;font-size:6.2em;letter-spacing:.04em;line-height:.9;text-shadow:0 0 1em rgba(0,0,0,.2)}
+.cover .mast span{display:block;margin-top:.6em}
+.cover .lines{position:absolute;left:6%;bottom:6%;z-index:2;text-shadow:0 0 1em rgba(0,0,0,.45)}
+.cover .lines .big{font-family:var(--display);font-style:italic;font-size:2.4em;line-height:1.05}
+.cover .lines .cj{font-size:1.15em;letter-spacing:.4em;margin:.5em 0 1.2em}
+.cover .side{position:absolute;right:6%;bottom:6%;z-index:2;text-align:right;text-shadow:0 0 1em rgba(0,0,0,.5);display:flex;flex-direction:column;gap:1.1em}
+.cover .side div{font-family:var(--display);font-size:1.15em;line-height:1.1}
+.cover .side small{display:block;font-family:var(--cjk);font-size:.72em;letter-spacing:.3em;margin-top:.2em}
+
+/* masthead / contents / end pages */
+.txt{padding:4em 3.6em 4.4em 4em;display:flex;flex-direction:column}
+.txt h1{font-family:var(--display);font-style:italic;font-weight:500;font-size:4.4em;line-height:.95}
+.txt .sub{font-family:var(--cjk);letter-spacing:.6em;font-size:1.2em;margin-top:.5em}
+.cred{margin-top:2.6em;display:grid;gap:1.5em}
+.cred h4{font-weight:400;color:var(--mute);margin-bottom:.35em}
+.cred .nm{font-family:var(--cjk);font-size:1.6em;font-weight:600}
+.note{margin-top:auto;position:relative;display:grid;gap:.05em}
+.note .nb{position:absolute;right:-5.5em;bottom:-3.5em;width:15em;height:15em;pointer-events:none;opacity:.95}
+.note h4{position:relative}
+.note p{position:relative;font-family:var(--display);font-weight:400;font-size:2.7em;line-height:1.02;letter-spacing:-.01em}
+.note p em{font-style:italic}
+.note p:nth-of-type(2){padding-left:1.1em}
+.note p:nth-of-type(3){padding-left:2.2em}
+.note .spring{font-style:italic;background:linear-gradient(90deg,#e8a0b0,#e7c64b 50%,#8fb46a 90%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.1em}
+.single .note p{font-size:2.1em}.single .cred{gap:.8em;margin-top:1.4em}.single .note .nb{width:11em;height:11em;right:-4em;bottom:-2.5em}
+.toc.tight a{padding:.2em 0;font-size:.92em}
+.single .toc.tight a{padding:.12em 0;font-size:.86em}
+.note .sig{position:relative;display:flex;gap:1.6em;margin-top:1.1em;color:var(--mute)}
+.strip{display:flex;height:1em;margin-top:2em}
+.strip i{flex:1}
+.toc{margin-top:1.6em;display:flex;flex-direction:column}
+.toc a{display:grid;grid-template-columns:2.6em 1fr auto;align-items:baseline;gap:.6em;padding:.42em 0;border-bottom:1px solid var(--hair);color:inherit;text-decoration:none;cursor:pointer}
+.toc a:hover .tn,.toc a:focus-visible .tn{font-style:italic}
+.toc a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.toc .no{font-family:var(--display);font-size:1em;font-variant-numeric:tabular-nums}
+.toc .tn{font-family:var(--display);font-size:.98em}
+.toc .tn small{font-family:var(--cjk);font-size:.82em;margin-left:.6em;letter-spacing:.15em}
+.toc .md{font-family:var(--cjk);font-size:.8em;color:var(--mute)}
+.pal{margin-top:1.2em;display:grid;grid-template-columns:2em repeat(5,1fr);gap:.28em .35em;align-items:center}
+.pal .no{font-family:var(--display);font-size:.8em}
+.pal i{height:1.12em;display:block;transition:transform .3s}
+.pal i:hover{transform:scaleY(1.5)}
+.bcover{background:#121212;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.bcover b{font-family:var(--display);font-weight:500;font-size:3.6em;letter-spacing:.04em}
+.bcover .dots{display:grid;grid-template-columns:repeat(6,1.4em);gap:.7em;margin:2.4em 0}
+.bcover .dots i{width:1.4em;height:1.4em;border-radius:50%}
+.bar{position:absolute;bottom:4em;right:4em;background:#fff;padding:.7em .8em .4em;color:#111}
+.bar .bars{display:flex;height:3em;align-items:stretch;gap:0}
+.bar .bars i{display:block;background:#111}
+.bar .num{font-size:.6em;letter-spacing:.24em;margin-top:.3em;font-variant-numeric:tabular-nums}
+
+/* controls */
+#ctrl{position:absolute;left:0;right:0;bottom:0;height:56px;display:flex;align-items:center;justify-content:center;gap:22px;font-family:var(--label);color:#cfc9bf}
+#ctrl button{background:none;border:1px solid #57524b;color:#e9e4da;width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer}
+#ctrl button:hover{border-color:#e9e4da}
+#ctrl button:focus-visible{outline:2px solid #e9e4da;outline-offset:2px}
+#ctrl button:disabled{opacity:.3;cursor:default}
+#pg{min-width:120px;text-align:center;font-size:12px;letter-spacing:.24em;font-variant-numeric:tabular-nums}
+.hit{position:absolute;top:0;bottom:0;width:50%;z-index:50;cursor:pointer}
+.hit.l{left:0}.hit.r{right:0}
+
+.mgrid{margin-top:1.3em;display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:column;grid-template-rows:repeat(10,auto);column-gap:1.2em;row-gap:.25em}
+.mgrid a{position:relative;display:grid;grid-template-columns:.35em 1.9em 1fr auto;align-items:center;gap:.45em;padding:.22em .4em .22em 0;line-height:1.15;color:inherit;text-decoration:none;cursor:pointer;overflow:hidden}
+.mgrid a::before{content:"";position:absolute;inset:0;background:var(--c);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.3,.1,.2,1)}
+.mgrid a > *{position:relative}
+.mgrid a:hover::before,.mgrid a:focus-visible::before{transform:scaleX(1)}
+.mgrid a:hover,.mgrid a:focus-visible{color:var(--fg)}
+.mgrid .rb{align-self:stretch;display:block;background:var(--c)}
+.mgrid .no{font-family:var(--display);font-size:.9em;font-variant-numeric:tabular-nums}
+.mgrid .nm{font-family:var(--cjk);font-weight:600;font-size:.95em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mgrid .fl{font-family:var(--cjk);font-size:.68em;opacity:.7;white-space:nowrap}
+.toc a,.toc a *{line-height:1.15}
+
+/* colourful contents */
+.toc.tight{gap:.18em;border:0}
+.toc.tight a{position:relative;grid-template-columns:.42em 2.2em 1fr auto auto;align-items:center;border-bottom:0;padding:.18em .5em .18em 0;overflow:hidden}
+.toc.tight a::before{content:"";position:absolute;inset:0;background:var(--c);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.3,.1,.2,1)}
+.toc.tight a > *{position:relative}
+.toc.tight a:hover::before,.toc.tight a:focus-visible::before{transform:scaleX(1)}
+.toc.tight a:hover,.toc.tight a:focus-visible{color:var(--fg)}
+.toc.tight a:hover .md,.toc.tight a:focus-visible .md{color:inherit}
+.toc.tight .rb{align-self:stretch;display:block;background:var(--c);transform-origin:left}
+.toc.tight .no{padding-left:.5em}
+.toc.tight .pd{display:flex;gap:.18em}
+.toc.tight .pd i{width:.5em;height:.5em;border-radius:50%;transition:transform .3s}
+.toc.tight a:hover .pd i{transform:scale(1.35);box-shadow:0 0 0 1px rgba(255,255,255,.6)}
+.toc.tight.play a{animation:rowIn .6s cubic-bezier(.3,.1,.2,1) both;animation-delay:calc(var(--i) * 38ms + 250ms)}
+.toc.tight.play .rb{animation:barIn .7s cubic-bezier(.3,.1,.2,1) both;animation-delay:calc(var(--i) * 38ms + 250ms)}
+@keyframes rowIn{from{transform:translateX(-.6em);opacity:.35}to{transform:none;opacity:1}}
+@keyframes barIn{0%{transform:scaleX(0)}60%{transform:scaleX(2.4)}100%{transform:scaleX(1)}}
+.looksT{background:linear-gradient(90deg,var(--grad));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:flow 14s linear infinite;padding-right:.1em}
+@keyframes flow{from{background-position:0% 50%}to{background-position:300% 50%}}
+@media (prefers-reduced-motion:reduce){.looksT{animation:none}.toc.tight.play a,.toc.tight.play .rb{animation:none}}
+@media (prefers-reduced-motion:reduce){#book,.leaf,.spage{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="stage"><div id="book"></div></div>
+<div id="ctrl">
+  <button id="prev" aria-label="上一頁">‹</button>
+  <div id="pg">1 / 1</div>
+  <button id="next" aria-label="下一頁">›</button>
+</div>
+<script>
+const LOOKS=[{"n": 1, "model": "AU", "fc": "紫藤", "fe": "WISTERIA", "colors": [{"hex": "#13377C", "cn": "鈷藍夜", "en": "COBALT NIGHT"}, {"hex": "#C3A5C2", "cn": "紫藤", "en": "WISTERIA"}, {"hex": "#A9A971", "cn": "開心果", "en": "PISTACHIO"}, {"hex": "#F3DBD4", "cn": "虹粉", "en": "PRISM BLUSH"}, {"hex": "#C8AF92", "cn": "香檳", "en": "CHAMPAGNE"}], "material": [["緞面", "SATIN"], ["細褶", "PLISSÉ"], ["紫晶", "AMETHYST"], ["金釘", "GOLD STUD"]], "motif": [["稜鏡", "PRISM"], ["虹光", "SPECTRUM"], ["垂藤", "CASCADE"]], "mood": [["迷離", "DREAMY"], ["高貴", "REGAL"]]}, {"n": 2, "model": "霄璃", "fc": "毛茛", "fe": "BUTTERCUP", "colors": [{"hex": "#E26C27", "cn": "橘子汽水", "en": "TANGERINE"}, {"hex": "#2B6034", "cn": "苔綠", "en": "MOSS"}, {"hex": "#E9C717", "cn": "金盞", "en": "BUTTERCUP"}, {"hex": "#ECC8B1", "cn": "奶杏", "en": "APRICOT CREAM"}, {"hex": "#112014", "cn": "深林", "en": "DEEP FOREST"}], "material": [["麻花粗針", "CABLE KNIT"], ["蕾絲領", "LACE COLLAR"], ["琺瑯花釦", "ENAMEL BROOCH"], ["緞結", "SATIN BOW"]], "motif": [["掌心", "PALM"], ["捧花", "OFFERING"], ["日光", "SUNLIGHT"]], "mood": [["溫暖", "WARM"], ["天真", "INNOCENT"]]}, {"n": 3, "model": "殼乙", "fc": "鈴蘭", "fe": "LILY OF THE VALLEY", "colors": [{"hex": "#AAB371", "cn": "橄欖", "en": "OLIVE"}, {"hex": "#C94643", "cn": "朱絲", "en": "SILK RED"}, {"hex": "#2E3A52", "cn": "夜藍", "en": "MIDNIGHT"}, {"hex": "#F1D0CA", "cn": "珍珠粉", "en": "PEARL BLUSH"}, {"hex": "#511E1D", "cn": "牛血", "en": "OXBLOOD"}], "material": [["真絲", "SILK"], ["泡泡袖", "PUFF SLEEVE"], ["珍珠排釦", "PEARL BUTTON"], ["收腰", "CINCHED WAIST"]], "motif": [["光束", "LIGHT BEAM"], ["小鈴", "BELL"], ["長髮", "LONG HAIR"]], "mood": [["靜謐", "SERENE"], ["歸來", "RETURN"]]}, {"n": 4, "model": "桃子", "fc": "桃花", "fe": "PEACH BLOSSOM", "colors": [{"hex": "#75B1C4", "cn": "晴空", "en": "SKY"}, {"hex": "#CA1B14", "cn": "漆紅", "en": "LACQUER RED"}, {"hex": "#E69E90", "cn": "蜜桃", "en": "PEACH"}, {"hex": "#ECE9DF", "cn": "象牙", "en": "IVORY"}, {"hex": "#321310", "cn": "黑緞", "en": "BLACK SATIN"}], "material": [["漆皮", "PATENT"], ["圓領", "PETER PAN"], ["黑緞結", "BLACK BOW"], ["髮箍", "HEADBAND"]], "motif": [["蜜桃", "PEACH"], ["落瓣", "PETAL FALL"], ["枝椏", "BRANCH"]], "mood": [["甜美", "SWEET"], ["傾心", "ENCHANTED"]]}, {"n": 5, "model": "冰川", "fc": "金合歡", "fe": "MIMOSA", "colors": [{"hex": "#855488", "cn": "薰衣紫", "en": "LAVENDER"}, {"hex": "#5A926F", "cn": "翡翠", "en": "JADE"}, {"hex": "#E4C73C", "cn": "含羞黃", "en": "MIMOSA"}, {"hex": "#66331E", "cn": "馬鞍棕", "en": "SADDLE"}, {"hex": "#221611", "cn": "烏木", "en": "EBONY"}], "material": [["編織", "WOVEN"], ["掛脖", "HALTER"], ["皮革", "LEATHER"], ["金手環", "GOLD CUFF"]], "motif": [["碎光", "DAPPLED LIGHT"], ["銀葉", "SILVER LEAF"], ["短捲", "SHORT CURL"]], "mood": [["灑脫", "FREE"], ["暗戀", "SECRET"]]}, {"n": 6, "model": "Yui", "fc": "櫻桃", "fe": "CHERRY", "colors": [{"hex": "#265F5C", "cn": "孔雀綠", "en": "PEACOCK TEAL"}, {"hex": "#DB121A", "cn": "櫻桃紅", "en": "CHERRY"}, {"hex": "#F5E0D3", "cn": "瓷白", "en": "PORCELAIN"}, {"hex": "#541A1B", "cn": "酒漬", "en": "WINE"}, {"hex": "#879430", "cn": "嫩枝", "en": "TWIG"}], "material": [["荷葉邊", "RUFFLE"], ["水晶", "CRYSTAL"], ["黑絲帶", "BLACK RIBBON"], ["蕾絲紋面", "LACE MARK"]], "motif": [["果實", "FRUIT"], ["花冠", "CROWN"], ["銀髮", "PLATINUM"]], "mood": [["清冷", "COOL"], ["誘惑", "TEMPT"]]}, {"n": 7, "model": "秋秋", "fc": "鳶尾", "fe": "IRIS", "colors": [{"hex": "#DCB33A", "cn": "芥末", "en": "MUSTARD"}, {"hex": "#DE1818", "cn": "鸚鵡紅", "en": "MACAW RED"}, {"hex": "#1544B6", "cn": "鈷藍", "en": "COBALT"}, {"hex": "#2299B8", "cn": "土耳其藍", "en": "TURQUOISE"}, {"hex": "#7169C2", "cn": "鳶尾紫", "en": "IRIS"}], "material": [["羽飾", "PLUMAGE"], ["荷葉領", "RUFFLE COLLAR"], ["羅紋", "RIB KNIT"], ["金墜", "GOLD DROP"]], "motif": [["金剛鸚鵡", "MACAW"], ["原色", "PRIMARY"], ["熱帶", "TROPIC"]], "mood": [["明豔", "VIVID"], ["自由", "FREEDOM"]]}, {"n": 8, "model": "草莓", "fc": "虞美人", "fe": "POPPY", "colors": [{"hex": "#42AAAE", "cn": "湖水綠", "en": "LAGOON"}, {"hex": "#DE1612", "cn": "罌粟紅", "en": "POPPY RED"}, {"hex": "#D84E31", "cn": "燈籠橘", "en": "LANTERN"}, {"hex": "#181817", "cn": "墨黑", "en": "INK"}, {"hex": "#EAE0DC", "cn": "骨瓷", "en": "BONE"}], "material": [["皮革", "LEATHER"], ["寬肩", "POWER SHOULDER"], ["手套", "GLOVE"], ["紅唇", "RED LIP"]], "motif": [["燈籠果", "LANTERN FRUIT"], ["紅髮", "CRIMSON"], ["長夜", "NOCTURNE"]], "mood": [["冷豔", "COLD"], ["危險", "DANGER"]]}, {"n": 9, "model": "蘇晚棠", "fc": "迎春", "fe": "WINTER JASMINE", "colors": [{"hex": "#AF1512", "cn": "朱砂", "en": "CINNABAR"}, {"hex": "#E2A50C", "cn": "迎春黃", "en": "JASMINE"}, {"hex": "#DCC9BD", "cn": "霧白", "en": "MIST"}, {"hex": "#BFB3AA", "cn": "銀灰", "en": "SILVER"}, {"hex": "#0F1010", "cn": "松煙墨", "en": "PINE INK"}], "material": [["薄紗", "ORGANZA"], ["水墨", "INK WASH"], ["腰封", "OBI SASH"], ["黑絲帶", "BLACK RIBBON"]], "motif": [["枝", "BRANCH"], ["墨", "INK"], ["銀髮", "SILVER HAIR"]], "mood": [["疏離", "DISTANT"], ["東方", "ORIENT"]]}, {"n": 10, "model": "霄璃（男）", "fc": "香豌豆", "fe": "SWEET PEA", "colors": [{"hex": "#385D3F", "cn": "森綠", "en": "FOREST"}, {"hex": "#E69D42", "cn": "芥黃", "en": "OCHRE"}, {"hex": "#8A4681", "cn": "蘭紫", "en": "ORCHID"}, {"hex": "#602C5A", "cn": "茄紫", "en": "AUBERGINE"}, {"hex": "#E9DCD0", "cn": "珍珠", "en": "PEARL"}], "material": [["錦緞", "BROCADE"], ["刺繡", "EMBROIDERY"], ["珍珠鍊", "PEARL STRAND"], ["緞結", "SATIN BOW"]], "motif": [["紳士", "DANDY"], ["耳語", "WHISPER"], ["白髮", "WHITE HAIR"]], "mood": [["優雅", "ELEGANT"], ["溫柔", "TENDER"]]}, {"n": 11, "model": "MIN", "fc": "三色堇", "fe": "PANSY", "colors": [{"hex": "#ADBC1A", "cn": "萊姆", "en": "CHARTREUSE"}, {"hex": "#723F97", "cn": "堇紫", "en": "PANSY VIOLET"}, {"hex": "#D7CC3B", "cn": "堇黃", "en": "PANSY GOLD"}, {"hex": "#ECE8DA", "cn": "奶油", "en": "CREAM"}, {"hex": "#151C1F", "cn": "漆黑", "en": "JET"}], "material": [["緞面", "SATIN"], ["立體花飾", "APPLIQUÉ"], ["腰結", "BOW BELT"], ["蕾絲傘", "LACE PARASOL"]], "motif": [["陽傘", "PARASOL"], ["齊瀏海", "BLUNT FRINGE"], ["午後", "AFTERNOON"]], "mood": [["端莊", "PRIM"], ["思念", "LONGING"]]}, {"n": 12, "model": "TY", "fc": "銀蓮花", "fe": "ANEMONE", "colors": [{"hex": "#A7DDC6", "cn": "薄荷", "en": "MINT"}, {"hex": "#CF1A25", "cn": "銀蓮紅", "en": "ANEMONE RED"}, {"hex": "#E7E3DB", "cn": "雪白", "en": "SNOW"}, {"hex": "#120E0D", "cn": "漆黑", "en": "JET"}, {"hex": "#7C1C1C", "cn": "酒紅", "en": "BORDEAUX"}], "material": [["格紋", "TARTAN"], ["別針", "SAFETY PIN"], ["荷葉領", "JABOT"], ["粗針織", "CHUNKY KNIT"]], "motif": [["雙人", "DUET"], ["耳洞", "PIERCING"], ["紅與白", "RED & WHITE"]], "mood": [["叛逆", "REBEL"], ["相依", "TOGETHER"]]}, {"n": 13, "model": "Jiayi", "fc": "牡丹", "fe": "PEONY", "colors": [{"hex": "#264C74", "cn": "黛藍", "en": "INDIGO"}, {"hex": "#C73731", "cn": "牡丹紅", "en": "PEONY RED"}, {"hex": "#E9D2BC", "cn": "米白", "en": "ECRU"}, {"hex": "#E5826A", "cn": "珊瑚", "en": "CORAL"}, {"hex": "#3E7A5C", "cn": "玉綠", "en": "JADE"}], "material": [["旗袍", "QIPAO"], ["盤扣", "FROG CLOSURE"], ["刺繡", "EMBROIDERY"], ["珊瑚墜", "CORAL DROP"]], "motif": [["髮簪", "HAIRPIN"], ["富貴", "OPULENCE"], ["長髮", "LONG HAIR"]], "mood": [["明媚", "RADIANT"], ["大方", "GRACEFUL"]]}, {"n": 14, "model": "QOO（女）", "fc": "風信子", "fe": "HYACINTH", "colors": [{"hex": "#BE863C", "cn": "焦糖", "en": "CARAMEL"}, {"hex": "#1F2C50", "cn": "風信子藍", "en": "HYACINTH"}, {"hex": "#255EBA", "cn": "寶藍", "en": "SAPPHIRE"}, {"hex": "#49803A", "cn": "祖母綠", "en": "EMERALD"}, {"hex": "#0D1114", "cn": "夜黑", "en": "NIGHT"}], "material": [["串珠", "BEADWORK"], ["一字肩", "OFF-SHOULDER"], ["耳骨夾", "EAR CUFF"], ["寶石墜", "GEM DROP"]], "motif": [["異色瞳", "HETEROCHROMIA"], ["藍挑染", "BLUE STREAK"], ["齊瀏海", "BLUNT FRINGE"]], "mood": [["神秘", "MYSTIC"], ["冷靜", "COOL"]]}, {"n": 15, "model": "QOO（男）", "fc": "油菜花", "fe": "RAPESEED", "colors": [{"hex": "#B64520", "cn": "赤陶", "en": "TERRACOTTA"}, {"hex": "#374B6D", "cn": "丹寧", "en": "DENIM"}, {"hex": "#DCD60C", "cn": "菜花黃", "en": "CANOLA"}, {"hex": "#DAD1C8", "cn": "素白", "en": "PLAIN WHITE"}, {"hex": "#40271E", "cn": "皮革棕", "en": "LEATHER"}], "material": [["丹寧", "DENIM"], ["羅紋背心", "RIB TANK"], ["皮手套", "WORK GLOVE"], ["銀鍊", "SILVER CHAIN"]], "motif": [["燈泡", "BULB"], ["田野", "FIELD"], ["刺青", "TATTOO"]], "mood": [["野性", "WILD"], ["陽光", "SUNNY"]]}, {"n": 16, "model": "寧安", "fc": "勿忘我", "fe": "FORGET-ME-NOT", "colors": [{"hex": "#23528C", "cn": "皇家藍", "en": "ROYAL BLUE"}, {"hex": "#51ACD7", "cn": "勿忘我", "en": "FORGET-ME-NOT"}, {"hex": "#C1C5D3", "cn": "銀霧", "en": "SILVER MIST"}, {"hex": "#E2DADB", "cn": "珍珠白", "en": "PEARL"}, {"hex": "#D9D053", "cn": "花心黃", "en": "STAMEN"}], "material": [["百褶", "PLISSÉ"], ["高領", "HIGH NECK"], ["水晶", "CRYSTAL"], ["刺繡小花", "FLORET"]], "motif": [["捲髮", "CURL"], ["銀白", "SILVER"], ["凝視", "GAZE"]], "mood": [["記得", "REMEMBER"], ["清透", "CLEAR"]]}, {"n": 17, "model": "陌杳", "fc": "櫻花", "fe": "SAKURA", "colors": [{"hex": "#809634", "cn": "草綠", "en": "MEADOW"}, {"hex": "#114CAD", "cn": "鈷藍", "en": "COBALT"}, {"hex": "#C31413", "cn": "緞帶紅", "en": "RIBBON RED"}, {"hex": "#DEB8B4", "cn": "櫻粉", "en": "SAKURA"}, {"hex": "#5C4234", "cn": "栗棕", "en": "CHESTNUT"}], "material": [["印花", "PRINT"], ["荷葉領", "RUFFLE"], ["緞帶", "RIBBON"], ["櫻桃耳墜", "CHERRY DROP"]], "motif": [["落櫻", "PETAL FALL"], ["捲髮", "CURL"], ["掌心", "PALM"]], "mood": [["明朗", "BRIGHT"], ["浪漫", "ROMANCE"]]}, {"n": 18, "model": "ぬ", "fc": "葡萄風信子", "fe": "MUSCARI", "colors": [{"hex": "#DECF5B", "cn": "檸檬", "en": "LEMON"}, {"hex": "#E7C2C4", "cn": "草莓牛奶", "en": "STRAWBERRY MILK"}, {"hex": "#33468C", "cn": "葡萄藍", "en": "MUSCARI"}, {"hex": "#EBDCDD", "cn": "牛奶", "en": "MILK"}, {"hex": "#1A243C", "cn": "深海", "en": "DEEP NAVY"}], "material": [["毛海", "MOHAIR"], ["圓領", "PETER PAN"], ["緞帶", "RIBBON"], ["珍珠耳釘", "PEARL STUD"]], "motif": [["泡泡", "BUBBLE"], ["粉髮", "PINK HAIR"], ["晴天", "SUNNY DAY"]], "mood": [["童話", "FAIRYTALE"], ["輕盈", "AIRY"]]}, {"n": 19, "model": "陸蘋瑤", "fc": "晚香玉", "fe": "TUBEROSE", "colors": [{"hex": "#9A661E", "cn": "赭金", "en": "OCHRE"}, {"hex": "#368172", "cn": "翠青", "en": "JADE TEAL"}, {"hex": "#EEE2C4", "cn": "晚香白", "en": "TUBEROSE"}, {"hex": "#A95034", "cn": "丹蔻", "en": "LACQUER"}, {"hex": "#2E241A", "cn": "烏髮", "en": "RAVEN"}], "material": [["旗袍", "QIPAO"], ["珍珠盤扣", "PEARL FROG"], ["立體花飾", "APPLIQUÉ"], ["玉鐲", "JADE BANGLE"]], "motif": [["花穗", "SPIKE"], ["夜香", "NIGHT SCENT"], ["長髮", "LONG HAIR"]], "mood": [["溫婉", "GENTLE"], ["幽香", "FRAGRANT"]]}, {"n": 20, "model": "木木", "fc": "番紅花", "fe": "CROCUS", "colors": [{"hex": "#9DC40B", "cn": "青檸", "en": "LIME"}, {"hex": "#592F7D", "cn": "番紅紫", "en": "CROCUS"}, {"hex": "#D14B11", "cn": "花蕊橘", "en": "SAFFRON"}, {"hex": "#F2F1EA", "cn": "髮帶白", "en": "ALABASTER"}, {"hex": "#1B1B17", "cn": "墨黑", "en": "JET"}], "material": [["羅紋針織", "RIB KNIT"], ["無袖", "SLEEVELESS"], ["刺繡", "EMBROIDERY"], ["紫晶墜", "AMETHYST DROP"]], "motif": [["髮帶", "HEADBAND"], ["花蕊", "STAMEN"], ["波浪長髮", "WAVES"]], "mood": [["銳利", "SHARP"], ["濃烈", "INTENSE"]]}];
+const N=LOOKS.length;
+
+function rnd(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+function mixc(a,b,t){const x=[1,3,5].map(i=>parseInt(a.substr(i,2),16)),y=[1,3,5].map(i=>parseInt(b.substr(i,2),16));return 'rgb('+x.map((v,i)=>Math.round(v*t+y[i]*(1-t))).join(',')+')'}
+function bloomURL(cols,seed,S=600){
+  const cv=document.createElement('canvas');cv.width=cv.height=S;const c=cv.getContext('2d');const r=rnd(seed),X=S/2,Y=S/2,R=S*.46;const anth=cols.slice(1).concat(cols.slice(1));
+  for(let i=0;i<7;i++){const a=i/7*Math.PI*2+r()*.3;c.save();c.translate(X,Y);c.rotate(a);c.globalAlpha=.12;c.fillStyle=cols[i%cols.length];c.beginPath();c.moveTo(0,0);c.bezierCurveTo(R*.35,-R*.32,R*.95,-R*.22,R*1.02,0);c.bezierCurveTo(R*.95,R*.22,R*.35,R*.32,0,0);c.fill();c.restore();}
+  for(let i=0;i<60;i++){const a=r()*Math.PI*2,L=R*(.45+r()*.55),bend=(r()-.5)*.9,ex=X+Math.cos(a)*L,ey=Y+Math.sin(a)*L,mx=X+Math.cos(a+bend)*L*.55,my=Y+Math.sin(a+bend)*L*.55;
+    c.strokeStyle=mixc(cols[(i%2)+1],'#ffffff',.55);c.globalAlpha=.8;c.lineWidth=1.2+r()*1.4;c.beginPath();c.moveTo(X,Y);c.quadraticCurveTo(mx,my,ex,ey);c.stroke();
+    c.save();c.translate(ex,ey);c.rotate(Math.atan2(ey-my,ex-mx));c.globalAlpha=.95;c.fillStyle=anth[i%anth.length];c.beginPath();c.ellipse(0,0,6+r()*7,2.6+r()*2.2,0,0,Math.PI*2);c.fill();c.restore();
+    if(r()<.55)for(let k=0;k<3;k++){c.globalAlpha=.6;c.fillStyle=anth[(i+k)%anth.length];c.beginPath();c.arc(ex+(r()-.5)*30,ey+(r()-.5)*30,1.2+r()*2.2,0,Math.PI*2);c.fill();}}
+  c.globalAlpha=1;c.fillStyle=cols[2];c.beginPath();c.arc(X,Y,R*.07,0,Math.PI*2);c.fill();
+  for(let k=0;k<30;k++){const a=r()*Math.PI*2,d=R*.07+r()*R*.06;c.fillStyle=cols[k%cols.length];c.beginPath();c.arc(X+Math.cos(a)*d,Y+Math.sin(a)*d,1.5+r()*2,0,Math.PI*2);c.fill();}
+  return cv.toDataURL('image/png');
+}
+const NOTEBLOOM=bloomURL(['#f3d6dc','#e8a0b0','#e7c64b','#8fb46a','#d9a3c4'],2027);
+const pad=n=>String(n).padStart(2,'0');
+const img=(k,kind)=>`../img/look${pad(k)}_${kind}.jpg`;
+function lum(h){const r=parseInt(h.slice(1,3),16)/255,g=parseInt(h.slice(3,5),16)/255,b=parseInt(h.slice(5,7),16)/255;const f=c=>c<=.03928?c/12.92:Math.pow((c+.055)/1.055,2.4);return .2126*f(r)+.7152*f(g)+.0722*f(b)}
+const onBg=h=>lum(h)>.32?'#151413':'#fbfaf7';
+function feSize(s){const n=s.length;return n<=6?5.2:n<=8?4.4:n<=10?3.7:n<=13?3.2:2.7}
+
+function P(cls,inner,attrs=''){return `<div class="page ${cls}" ${attrs}>${inner}</div>`}
+const I=(src,extra='')=>`<img data-src="${src}" alt="" ${extra}>`;
+
+const COVER=(()=>{const r=Math.floor(Math.random()*LOOKS.length);const rest=LOOKS.map((_,i)=>i).filter(i=>i!==r).sort(()=>Math.random()-.5).slice(0,4);return {i:r,side:rest}})();
+function coverPage(){
+  const l=LOOKS[COVER.i];
+  return P('cover R',`${I(img(l.n,'sq'))}
+  <div class="mast"><b>FLORAISON</b><span class="lab">花信 · Spring / Summer 2027</span></div>
+  <div class="side">
+    ${COVER.side.map(k=>{const x=LOOKS[k];return `<div>${x.fe.charAt(0)+x.fe.slice(1).toLowerCase()}<small>${x.fc}</small></div>`}).join('')}
+  </div>
+  <div class="lines"><div class="big">Twenty<br>Flowers</div><div class="cj">二十種花 · 春季號</div><div class="lab">Issue 01 · SS27 · Cover Look ${pad(l.n)} ${l.model}</div></div>`);
+}
+function mastPage(side){
+  return P('txt '+side,`<div class="lab" style="color:var(--mute)">Issue 01 · SS27</div>
+  <h1 style="margin-top:.6em">Floraison</h1><div class="sub">花信 · 春季號</div>
+  <div class="cred">
+    <div><h4 class="lab">Editor-in-Chief 總編輯</h4><div class="nm">寧安</div></div>
+    <div><h4 class="lab">Creative Director 創意總監</h4><div class="nm">寧安</div></div>
+    <div><h4 class="lab">Curation 策劃</h4><div class="nm">寧安</div></div>
+  </div>
+  <div class="note">
+    <img class="nb" src="${NOTEBLOOM}" alt="">
+    <h4 class="lab" style="color:var(--mute);margin-bottom:.9em">Editor's Note</h4>
+    <p>Twenty <em>models</em></p>
+    <p>Twenty <em>flowers</em></p>
+    <p>One <span class="spring">spring</span></p>
+    <div class="sig lab"><span>Petal to Petal</span><span>SS27</span></div>
+  </div>
+  <div class="strip">${LOOKS.map(l=>`<i style="background:${l.colors[0].hex}"></i>`).join('')}</div>`);
+}
+function tocPage(side){
+  const grad=LOOKS.map(l=>l.colors[0].hex).concat([LOOKS[0].colors[0].hex]).join(',');
+  return P('txt '+side,`<div class="lab" style="color:var(--mute)">Contents 目錄</div>
+  <h1 style="font-size:2.8em;margin-top:.3em"><span class="looksT" style="--grad:${grad}">Looks</span></h1>
+  <div class="toc tight">${LOOKS.map((l,i)=>{const c=l.colors[0].hex;return `<a data-go="${l.n}" tabindex="0" style="--c:${c};--fg:${onBg(c)};--i:${i}"><i class="rb"></i><span class="no">${pad(l.n)}</span><span class="tn">${l.fe.charAt(0)+l.fe.slice(1).toLowerCase()}<small>${l.fc}</small></span><span class="pd">${l.colors.slice(1).map(x=>`<i style="background:${x.hex}"></i>`).join('')}</span><span class="md">${l.model}${l.n===16?' · 主編':''}</span></a>`}).join('')}</div>`);
+}
+function wideHalf(l,side,full){
+  const cap=`<div class="ov wcap"><span class="fe">${l.fe.charAt(0)+l.fe.slice(1).toLowerCase()}</span><span class="fc">${l.fc}</span></div>`;
+  const num=`<div class="ov bignum">${pad(l.n)}</div>`;
+  const tag=`<div class="ov wtag lab">Look ${pad(l.n)} · ${l.model}</div>`;
+  let inner=`<div class="half">${I(img(l.n,'wide'))}</div>`;
+  if(full) inner+=num+cap+tag; else if(side==='L') inner+=num+tag; else inner+=cap+`<div class="ov wtag lab">Floraison SS27</div>`;
+  return P(`wide ${full?'full':side}`,inner);
+}
+function sqPage(l,side,pno){
+  const bg=l.colors[0].hex, fg=onBg(bg);
+  return P(`sq ${side}`,`<div class="frame">${I(img(l.n,'sq'))}</div>
+  <div class="row lab"><span>Look ${pad(l.n)}</span><span>${l.model}</span></div>
+  <div class="sqname"><span class="fe">${l.fe.charAt(0)+l.fe.slice(1).toLowerCase()}</span><span class="fc">${l.fc}</span></div>
+  <div class="dots">${l.colors.map(c=>`<i style="background:${c.hex}"></i>`).join('')}</div>
+  ${pno?`<div class="folio" style="color:${fg};opacity:.7">${pno}</div>`:''}`,`style="background:${bg};color:${fg}"`);
+}
+function infoPage(l,side,pno){
+  const sp=(t,arr)=>`<div class="spec"><h4 class="lab">${t}</h4>${arr.map(([c,e])=>`<p><b>${c}</b><span>${e}</span></p>`).join('')}</div>`;
+  return P(`info ${side}`,`<div class="top lab"><span>Look ${pad(l.n)} / ${pad(N)}</span><span>Floraison SS27</span></div>
+  <h2 style="font-size:${feSize(l.fe)}em">${l.fe}</h2>
+  <div class="cn">${l.fc}</div>
+  ${l.n===16?`<div class="ed lab">Editor's Look 主編造型</div>`:''}
+  <div class="chips">${l.colors.map(c=>`<div class="chip"><div class="sw" style="background:${c.hex}"></div><div class="c1">${c.cn}</div><div class="c2">${c.en}</div><div class="c3">${c.hex}</div></div>`).join('')}</div>
+  <div class="specs">
+    ${sp('Material 材質',l.material)}
+    ${sp('Motif 意象',l.motif)}
+    ${sp('Mood 情緒',l.mood)}
+    <div class="spec"><h4 class="lab">Model 模特</h4><div class="model">${l.model}</div></div>
+  </div>
+  ${pno?`<div class="folio">${pno}</div>`:''}`);
+}
+function palPage(side,pno){
+  return P('txt '+side,`<div class="lab" style="color:var(--mute)">Index 索引</div>
+  <h1 style="font-size:2.8em;margin-top:.3em">The <span class="looksT" style="--grad:${LOOKS.map(l=>l.colors[0].hex).join(',')}">Palette</span></h1><div class="sub" style="font-size:1em">春季色譜</div>
+  <div class="pal">${LOOKS.map(l=>`<span class="no">${pad(l.n)}</span>${l.colors.map(c=>`<i style="background:${c.hex}" title="${c.cn} ${c.en}"></i>`).join('')}`).join('')}</div>
+  ${pno?`<div class="folio">${pno}</div>`:''}`);
+}
+function credPage(side,pno){
+  return P('txt '+side,`<div class="lab" style="color:var(--mute)">Credits 製作</div>
+  <h1 style="font-size:2.8em;margin-top:.3em"><span class="looksT" style="--grad:${LOOKS.map(l=>l.colors[0].hex).join(',')}">Models</span></h1><div class="sub" style="font-size:1em">模特</div>
+  <div class="mgrid">${LOOKS.map(l=>{const c=l.colors[0].hex;return `<a data-go="${l.n}" tabindex="0" style="--c:${c};--fg:${onBg(c)}"><i class="rb"></i><span class="no">${pad(l.n)}</span><span class="nm">${l.model}</span><span class="fl">${l.fc}</span></a>`}).join('')}</div>
+  <div class="cred" style="margin-top:auto;padding-top:1em;grid-template-columns:1fr 1fr">
+    <div><h4 class="lab">Editor-in-Chief 總編輯</h4><div class="nm" style="font-size:1.2em">寧安</div></div>
+    <div><h4 class="lab">Project 企劃</h4><div class="nm" style="font-size:1.2em;font-family:var(--display);font-style:italic;font-weight:400">Petal to Petal Spring</div></div>
+  </div>
+  ${pno?`<div class="folio">${pno}</div>`:''}`);
+}
+function backPage(side){
+  let seed=11,bars='';for(let i=0;i<46;i++){seed=(seed*9301+49297)%233280;const w=1+Math.floor(seed/233280*3);bars+=`<i style="width:${w*.12}em;margin-right:${(1+(seed%3))*.1}em"></i>`}
+  return P('bcover '+side,`<div class="lab" style="opacity:.6">Spring / Summer 2027</div><b>FLORAISON</b><div class="cj" style="letter-spacing:.6em;margin-top:.4em">花信</div>
+  <div class="dots">${LOOKS.map(l=>`<i style="background:${l.colors[0].hex}"></i>`).join('')}</div>
+  <div class="lab" style="opacity:.6">Issue 01 · 20 Looks</div>
+  <div class="bar"><div class="bars">${bars}</div><div class="num">2027 0101 0020</div></div>`);
+}
+
+let mode=null, pages=[], cur=0, busy=false;
+const book=document.getElementById('book');
+
+function buildPages(m){
+  const out=[];
+  if(m==='spread'){
+    out.push(coverPage());
+    out.push(mastPage('L'));out.push(tocPage('R'));
+    let p=4;
+    LOOKS.forEach(l=>{out.push(wideHalf(l,'L'));out.push(wideHalf(l,'R'));out.push(sqPage(l,'L',p+2));out.push(infoPage(l,'R',p+3));p+=4;});
+    out.push(palPage('L',p));out.push(credPage('R',p+1));out.push(backPage('L'));
+  }else{
+    out.push(coverPage());out.push(mastPage(''));out.push(tocPage(''));
+    LOOKS.forEach(l=>{out.push(wideHalf(l,'',true));out.push(sqPage(l,'',0));out.push(infoPage(l,'',0));});
+    out.push(palPage('',0));out.push(credPage('',0));out.push(backPage(''));
+  }
+  return out;
+}
+function lookStart(n){return mode==='spread'?(4+4*(n-1))/2:3+3*(n-1)}
+function render(){
+  book.innerHTML='';
+  if(mode==='spread'){
+    book.classList.remove('single');
+    const nl=pages.length/2;
+    for(let i=0;i<nl;i++){
+      const lf=document.createElement('div');lf.className='leaf';
+      lf.innerHTML=`<div class="face front">${pages[2*i]}</div><div class="face back">${pages[2*i+1]}</div>`;
+      book.appendChild(lf);
+    }
+  }else{
+    book.classList.add('single');
+    pages.forEach((h,j)=>{const d=document.createElement('div');d.className='spage';d.innerHTML=h;book.appendChild(d);});
+  }
+  book.querySelectorAll('[data-go]').forEach(a=>{
+    const go=e=>{e.stopPropagation();jump(lookStart(+a.dataset.go))};
+    a.addEventListener('click',go);a.addEventListener('keydown',e=>{if(e.key==='Enter')go(e)});
+  });
+  layout(true);
+}
+function maxPos(){return mode==='spread'?pages.length/2:pages.length-1}
+function layout(instant,flipIdx){
+  const els=[...book.children].filter(e=>e.classList.contains('leaf')||e.classList.contains('spage'));
+  if(instant)els.forEach(e=>e.style.transition='none');
+  if(mode==='spread'){
+    const nl=els.length;
+    els.forEach((lf,i)=>{const t=i<cur;lf.classList.toggle('turned',t);lf.style.zIndex=i===flipIdx?999:(t?i+1:nl-i)});
+    const pw=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pw'));
+    book.style.transform=`translateX(${cur===0?-pw/2:cur===nl?pw/2:0}px)`;
+    hydrate(els,i=>Math.abs(i-cur)<=3);
+  }else{
+    els.forEach((p,j)=>{p.style.zIndex=els.length-j;p.classList.toggle('gone',j<cur);p.classList.toggle('far',j<cur-1||j>cur+1)});
+    if(flipIdx!=null)els[flipIdx].classList.remove('far');
+    book.style.transform='';
+    hydrate(els,j=>Math.abs(j-cur)<=4);
+  }
+  if(instant){book.offsetHeight;els.forEach(e=>e.style.transition='');}
+  const onToc=mode==='spread'?cur===1:cur===2;
+  book.querySelectorAll('.toc.tight').forEach(el=>{el.classList.remove('play');if(onToc){void el.offsetWidth;el.classList.add('play')}});
+  const pg=document.getElementById('pg');
+  if(mode==='spread'){const nl=els.length;pg.textContent=cur===0?`1 / ${pages.length}`:cur===nl?`${pages.length} / ${pages.length}`:`${2*cur}–${2*cur+1} / ${pages.length}`}
+  else pg.textContent=`${cur+1} / ${pages.length}`;
+  document.getElementById('prev').disabled=cur===0;
+  document.getElementById('next').disabled=cur===maxPos();
+}
+function hydrate(els,near){els.forEach((e,i)=>{if(near(i))e.querySelectorAll('img[data-src]').forEach(im=>{im.src=im.dataset.src;im.removeAttribute('data-src')})})}
+function step(d){
+  if(busy)return;const t=cur+d;if(t<0||t>maxPos())return;
+  busy=true;
+  const flip=mode==='spread'?(d>0?cur:cur-1):(d>0?cur:cur-1);
+  cur=t;layout(false,flip);
+  setTimeout(()=>{busy=false;layout(false)},mode==='spread'?920:720);
+}
+function next(){step(1)}function prev(){step(-1)}
+function jump(t){if(busy)return;cur=Math.max(0,Math.min(maxPos(),t));layout(true)}
+
+function size(){
+  const W=window.innerWidth,H=window.innerHeight-56;
+  const m=W/H>1.05&&W>700?'spread':'single';
+  let pw,ph;
+  if(m==='spread'){ph=Math.min(H*.9,(W*.94)/2/.75);pw=ph*.75}
+  else{pw=Math.min(W*.92,H*.9*.75);ph=pw/.75}
+  document.documentElement.style.setProperty('--pw',pw+'px');
+  document.documentElement.style.setProperty('--ph',ph+'px');
+  if(m!==mode){
+    let lookAt=null;
+    if(mode){ // keep roughly the same look when switching
+      const i=mode==='spread'?Math.floor((2*cur-4)/4)+1:Math.floor((cur-3)/3)+1;
+      if(i>=1&&i<=N)lookAt=i;
+    }
+    mode=m;pages=buildPages(m);cur=lookAt?lookStart(lookAt):0;render();
+  }else layout(true);
+}
+book.addEventListener('click',e=>{if(e.target.closest('[data-go]'))return;const r=book.getBoundingClientRect();(e.clientX<r.left+r.width/2?prev:next)()});
+document.getElementById('next').onclick=next;document.getElementById('prev').onclick=prev;
+addEventListener('keydown',e=>{if(e.key==='ArrowRight')next();if(e.key==='ArrowLeft')prev()});
+let tx=null;
+addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>40)(dx<0?next:prev)();tx=null});
+addEventListener('resize',size);
+size();
+</script>
+<script src="../music.js"></script>
+</body>
+</html>
